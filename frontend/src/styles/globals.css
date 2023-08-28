@@ -1,0 +1,39 @@
+header {
+  display: flex;
+  width: 70%;
+  height: 80px;
+  margin: 8px;
+  margin-right: auto;
+  margin-left : auto;
+  background-color: rgba(181, 212, 109, 0.788);
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title a {
+  color: #343835;
+  text-decoration: none;
+  margin-right: auto;
+  font-size: 24px; /* タイトルのフォントサイズを大きく */
+  padding-left: 40px;
+}
+
+.menu-group {
+  padding-left: 200px;
+}
+
+.menu-item {
+  float: left;
+  margin-left: 50px; /* 各メニュー項目の間隔を調整 */
+}
+
+.menu-item a {
+  color: rgb(255, 0, 140);
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.menu-item a:hover {
+  color: #f39c12; /* ホバー時のカラーを変更 */
+}
