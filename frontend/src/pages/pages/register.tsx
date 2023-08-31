@@ -11,7 +11,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     // console.log(data);
     try {
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('http://localhost:8080/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,8 +23,9 @@ const Register = () => {
         const responseData = await response.json();
         console.log(responseData);
 
-        if (responseData.accountPageUrl) {
-          router.push(responseData.accountPageUrl);
+        // ユーザー作成成功後にアカウントページに遷移
+        if (responseData.LoginPageUrl) {
+          router.push(responseData.LoginPageUrl);
         }
 
       } else {
@@ -41,22 +42,21 @@ const Register = () => {
   return (
     <Layout>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-
-        {/* <div>
+        <div>
           <label>ユーザー名</label>
           <input {...register('name', { required: true })} />
           {errors.name && <span>ユーザー名を入力してください</span>}
-        </div> */}
+        </div>
 
         <div>
           <label>email</label>
           <input {...register('email', { required: true })} />
           {errors.email && <span>emailを入力してください</span>}
         </div>
-
+        
         {errorResponseData && (
           <div className="error-message">
-            {errorResponseData}
+            {errorResponseData.email && errorResponseData.email[0]}
           </div>
         )}
 
@@ -66,7 +66,7 @@ const Register = () => {
           {errors.password && <span>パスワードを入力してください</span>}
         </div>
 
-        <button type="submit">ログイン</button>
+        <button type="submit">新規登録</button>
       </form>
     </Layout>
   );

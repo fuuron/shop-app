@@ -9,6 +9,7 @@ services:
       - "8080:8080"
     volumes:
       - ./backend/src:/var/www
+    user: root
   frontend:
     build:
       context: .
