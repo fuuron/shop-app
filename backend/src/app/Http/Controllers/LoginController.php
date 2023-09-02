@@ -26,7 +26,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = User::where('email', $request->email)->first();
             $user->tokens()->delete();
-            $token = $user->createToken("login:user{$user->id}")->plainTextToken;
+            $token = $user->createToken('token')->accessToken;
 
             return response()->json(['token' => $token ], Response::HTTP_OK);
         }
