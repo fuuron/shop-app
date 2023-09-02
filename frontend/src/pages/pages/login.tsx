@@ -22,6 +22,7 @@ const Register = () => {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
+        localStorage.setItem('token', JSON.stringify(responseData.token));
 
         if (responseData.accountPageUrl) {
           router.push(responseData.accountPageUrl);
