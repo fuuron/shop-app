@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
     // アクセストークンが存在する場合にAPIリクエストを行う
     if (accessToken) {
       const accessTokenString = accessToken.access_token;
-      fetch('http://localhost:8080/api/user',
+      fetch('http://localhost/api/user',
         {
           method: 'GET',
           headers: {
