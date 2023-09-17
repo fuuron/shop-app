@@ -5,10 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Models\User;
 
-// use App\Http\Controllers\AuthController;
-
-// use App\Http\Controllers\Auth\RegisterController;　実験
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,9 +19,9 @@ use App\Models\User;
 // Route::get('/create', [RegisterController::class, 'create']);　実験
 // Route::get('/check-login-status', [AuthController::class, 'checkLoginStatus']);
 
-Route::post('/register', [AuthController::class], 'register');
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::post('/login', [AuthController::class], 'login');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

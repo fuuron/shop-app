@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->messages()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => 'そのemailは使用できません'], Response::HTTP_UNPROCESSABLE_ENTITY);
         } else {
             $user = User::create([
                 'name' => $request->name,
@@ -43,7 +43,7 @@ class AuthController extends Controller
             //ログインが成功した場合はトークンを返す
             return response()->json(['token' => $token], Response::HTTP_OK);
         }
-        return response()->json('Can Not Login.', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json('emailまたはパスワードが間違っています', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
 //     /**
