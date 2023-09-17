@@ -1,41 +1,41 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '../../styles/login.module.css'
 import router from 'next/router'
-import Layout from '../../components/layout';
+import Layout from '../../components/layout'
+import axios from 'axios'
+
+const http = axios.create({
+  baseURL: 'http://localhost',
+  withCredentials: true,
+});
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
-    // console.log(data);
     try {
-      const response = await fetch('http://localhost/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      // 1. CSRF トークンを取得
+      await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
   
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-        localStorage.setItem('token', JSON.stringify(responseData.token));
-
-        if (responseData.accountPageUrl) {
-          router.push(responseData.accountPageUrl);
-        }
-
-      } else {
-        const errorResponseData = await response.json();
-        console.error('エラーレスポンス:', errorResponseData);
-        setErrorResponseData(errorResponseData);
+      // 2. データを送信
+      const response = await http.post('/api/login', data);
+      console.log(response);
+  
+      // 3. レスポンスを処理
+      const responseData = response.data;
+      console.log(responseData);
+  
+      if (responseData.accountPageUrl) {
+        router.push(responseData.accountPageUrl);
       }
-    
+      
     } catch (error) {
       console.error('エラーが発生しました:', error);
+      const errorResponseData = error.response.data;
+      console.error('エラーレスポンス:', errorResponseData);
+      setErrorResponseData(errorResponseData);
     }
   };
 

@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 
 // use App\Http\Controllers\AuthController;
@@ -24,11 +23,10 @@ use App\Models\User;
 // Route::get('/create', [RegisterController::class, 'create']);　実験
 // Route::get('/check-login-status', [AuthController::class, 'checkLoginStatus']);
 
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [AuthController::class], 'register');
 
+Route::post('/login', [AuthController::class], 'login');
 
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

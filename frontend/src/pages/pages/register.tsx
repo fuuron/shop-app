@@ -23,7 +23,6 @@ const Register = () => {
         const responseData = await response.json();
         console.log(responseData);
 
-        // ユーザー作成成功後にアカウントページに遷移
         if (responseData.LoginPageUrl) {
           router.push(responseData.LoginPageUrl);
         }

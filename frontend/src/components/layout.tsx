@@ -29,41 +29,41 @@ const Layout = ({ children }) => {
   //     });
   // }, []);
 
-  useEffect(() => {
-    // ここでアクセストークンを取得
-    const accessTokenDataString = localStorage.getItem('token'); // ローカルストレージからアクセストークンを取得
-    const accessToken = JSON.parse(accessTokenDataString);
-    console.log(accessToken);
-    // アクセストークンが存在する場合にAPIリクエストを行う
-    if (accessToken) {
-      const accessTokenString = accessToken.access_token;
-      fetch('http://localhost/api/user',
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${accessTokenString}`, // アクセストークンをBearerトークンとして含める
-            'Content-Type': 'application/json'
-          },
-        }
-      )
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // APIからのレスポンスを処理
-        console.log(data);
+  // useEffect(() => {
+  //   // ここでアクセストークンを取得
+  //   const accessTokenDataString = localStorage.getItem('token'); // ローカルストレージからアクセストークンを取得
+  //   const accessToken = JSON.parse(accessTokenDataString);
+  //   console.log(accessToken);
+  //   // アクセストークンが存在する場合にAPIリクエストを行う
+  //   if (accessToken) {
+  //     const accessTokenString = accessToken.access_token;
+  //     fetch('http://localhost/api/user',
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': `Bearer ${accessTokenString}`, // アクセストークンをBearerトークンとして含める
+  //           'Content-Type': 'application/json'
+  //         },
+  //       }
+  //     )
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       // APIからのレスポンスを処理
+  //       console.log(data);
 
-        // ログイン状態を更新
-        setLoggedIn(true);
-      })
-      .catch(error => {
-        console.error('エラー:', error);
-      });
-    }
-  }, []);
+  //       // ログイン状態を更新
+  //       setLoggedIn(true);
+  //     })
+  //     .catch(error => {
+  //       console.error('エラー:', error);
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div>
