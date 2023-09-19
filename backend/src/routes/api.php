@@ -20,8 +20,10 @@ use App\Models\User;
 // Route::get('/check-login-status', [AuthController::class, 'checkLoginStatus']);
 
 Route::post('/register', [AuthController::class, 'register']);
-
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/destroy', [AuthController::class, 'destroy']);
+Route::post('/edit', [AuthController::class, 'edit']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

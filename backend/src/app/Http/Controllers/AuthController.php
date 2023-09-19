@@ -25,12 +25,11 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make($request->password)
             ]);
-
             return response()->json([
                 'message' => 'User registration completed',
-                'LoginPageUrl' => '/pages/login',
+                'LoginPageUrl' => '/pages/login'
             ], Response::HTTP_OK);
         }
     }
@@ -41,43 +40,59 @@ class AuthController extends Controller
             $user->tokens()->delete();
             $token = $user->createToken("login:user{$user->id}")->plainTextToken;
             //ログインが成功した場合はトークンを返す
-            return response()->json(['token' => $token], Response::HTTP_OK);
+            return response()->json([
+                'token' => $token,
+                'accountPageUrl' => '/pages/account'
+            ], Response::HTTP_OK);
         }
         return response()->json('emailまたはパスワードが間違っています', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-//     /**
-//      * Display the specified resource.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function show($id)
-//     {
-//         //
-//     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->json(true);
+    }
 
-//     /**
-//      * Update the specified resource in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function update(Request $request, $id)
-//     {
-//         //
-//     }
+    public function destroy(Request $request)
+    {
+        $user = Auth::user();
+        $user->delete();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->json(true);
+    }
 
-//     /**
-//      * Remove the specified resource from storage.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function destroy($id)
-//     {
-//         //
-//     }
+    public function edit(Request $request)
+    {
+        $rules = [
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ];
 
+        if ($request->has('email') && $request->email != Auth::user()->email) {
+            $rules['email'][] = 'unique:users,email';
+        }
+        
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => 'そのemailは使用できません'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        } else {
+            $user = Auth::user();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
+
+        return response()->json([
+            'message' => 'ユーザー情報が編集されました',
+            'LoginPageUrl' => '/pages/account'
+        ], Response::HTTP_OK);
+    }
 }

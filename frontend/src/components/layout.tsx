@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from './header'; // Headerコンポーネントをインポート
+import Header from './header' // Headerコンポーネントをインポート
 
 const Layout = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);

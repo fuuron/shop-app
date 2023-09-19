@@ -1,23 +1,23 @@
+import styles from '../../styles/login.module.css'
+import Layout from '../../components/layout'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import styles from '../../styles/login.module.css'
 import router from 'next/router'
-import Layout from '../../components/layout'
 import axios from 'axios'
 
 const http = axios.create({
   baseURL: 'http://localhost',
   withCredentials: true,
-});
+})
 
-const Register = () => {
+const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
     try {
       // 1. CSRF トークンを取得
-      await axios.get('http://localhost/sanctum/csrf-cookie', { withCredentials: true });
+      http.get('/sanctum/csrf-cookie');
   
       // 2. データを送信
       const response = await http.post('/api/login', data);
@@ -37,7 +37,7 @@ const Register = () => {
       console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
-  };
+  }
 
   return (
     <Layout>
@@ -70,7 +70,7 @@ const Register = () => {
         <button type="submit">ログイン</button>
       </form>
     </Layout>
-  );
-};
+  )
+}
 
-export default Register;
+export default Login;
