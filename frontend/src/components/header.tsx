@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Header = ({ loggedIn }) => {
   return (
@@ -8,7 +8,7 @@ const Header = ({ loggedIn }) => {
         <ul className="menu-group">
           <li className="menu-item"><a href="#">項目1</a></li>
           <li className="menu-item"><a href="#">項目1</a></li>
-          <li className="menu-item"><a href="#">項目1</a></li>
+          <li className="menu-item"><a href="/pages/account">アカウント情報</a></li>
           {loggedIn ? (
             <li className="menu-item"><a href="/pages/account">アカウント情報</a></li>
           ) : (
@@ -20,7 +20,7 @@ const Header = ({ loggedIn }) => {
         </ul>
       </nav>
     </header>
-  );
-};
+  )
+}
 
 export default Header;

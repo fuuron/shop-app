@@ -10,7 +10,7 @@ const http = axios.create({
   withCredentials: true
 })
 
-const Register = () => {
+const Edit = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
 
@@ -18,7 +18,7 @@ const Register = () => {
     // console.log(data);
     try {
       await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/register', data);
+      const response = await http.post('/api/edit', data);
       const responseData = response.data;
       console.log(responseData);
       
@@ -67,4 +67,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default Edit;
