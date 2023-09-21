@@ -9,17 +9,17 @@ export default function ProductsList () {
                 <h2 className={styles.title}>example</h2>
                 <ul>
                     <li>
-                        <Link href="/">
+                        <Link href='/'>
                             example1
                         </Link>
                     </li>
                     <li>
-                        <Link href="/">
+                        <Link href='/'>
                             example2
                         </Link>
                     </li>
                     <li>
-                        <Link href="/">
+                        <Link href='/'>
                             example3
                         </Link>
                     </li>

@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import router from 'next/router'
 import axios from 'axios'
+import AcccountPage from './account'
 
 const http = axios.create({
   baseURL: 'http://localhost',
-  withCredentials: true,
+  withCredentials: true
 })
 
 const Login = () => {
@@ -56,18 +57,18 @@ const Login = () => {
         </div>
 
         {errorResponseData && (
-          <div className="error-message">
+          <div className='error-message'>
             {errorResponseData}
           </div>
         )}
 
         <div>
           <label>パスワード</label>
-          <input type="password" {...register('password', { required: true })} />
+          <input type='password' {...register('password', { required: true })} />
           {errors.password && <span>パスワードを入力してください</span>}
         </div>
 
-        <button type="submit">ログイン</button>
+        <button type='submit'>ログイン</button>
       </form>
     </Layout>
   )

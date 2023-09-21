@@ -50,18 +50,18 @@ const Register = () => {
         </div>
         
         {errorResponseData && (
-          <div className="error-message">
+          <div className='error-message'>
             {errorResponseData.errors}
           </div>
         )}
 
         <div>
           <label>パスワード</label>
-          <input type="password" {...register('password', { required: true })} />
+          <input type='password' {...register('password', { required: true })} />
           {errors.password && <span>パスワードを入力してください</span>}
         </div>
 
-        <button type="submit">新規登録</button>
+        <button type='submit'>新規登録</button>
       </form>
     </Layout>
   )

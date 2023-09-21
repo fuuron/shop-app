@@ -61,7 +61,7 @@ const Edit = () => {
           {errors.password && <span>パスワードを入力してください</span>}
         </div>
 
-        <button type="submit">新規登録</button>
+        <button type="submit">編集</button>
       </form>
     </Layout>
   )
