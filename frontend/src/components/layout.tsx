@@ -31,8 +31,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <h1 className='title'><a href='/'>タイトル</a></h1>
           <nav className='nav'>
             <ul className='menu-group'>
-              <li className='menu-item'><a href='#'>商品一覧</a></li>
-              <li className='menu-item'><a href='#'>商品投稿</a></li>
+              {/* <li className='menu-item'><a href='#'>商品一覧</a></li>
+              <li className='menu-item'><a href='#'>商品投稿</a></li> */}
               <li className='menu-item'><a href='/pages/login'>ログイン</a></li>
               <li className='menu-item'><a href='/pages/register'>新規登録</a></li>
             </ul>
@@ -51,10 +51,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <h1 className='title'><a href='/'>タイトル</a></h1>
           <nav className='nav'>
             <ul className='menu-group'>
-              <li className='menu-item'><a href='#'>商品一覧</a></li>
+              <li className='menu-item'><a href='/pages/shop-page'>商品一覧</a></li>
               <li className='menu-item'><a href='#'>商品投稿</a></li>
               <li className='menu-item'><a href='/pages/account'>{user.name}</a></li>
-              <li className='menu-item'><a href='/pages/register'>新規登録</a></li>
+              {/* <li className='menu-item'><a href='/pages/register'>新規登録</a></li> */}
             </ul>
           </nav>
         </header>

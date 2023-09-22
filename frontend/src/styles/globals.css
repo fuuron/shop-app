@@ -15,17 +15,17 @@ header {
   color: #343835;
   text-decoration: none;
   margin-right: auto;
-  font-size: 24px; /* タイトルのフォントサイズを大きく */
+  font-size: 24px;
   padding-left: 40px;
 }
 
 .menu-group {
-  padding-left: 200px;
+  padding-left: 300px;
 }
 
 .menu-item {
   float: left;
-  margin-left: 50px; /* 各メニュー項目の間隔を調整 */
+  margin-left: 70px; /* 各メニュー項目の間隔を調整 */
 }
 
 .menu-item a {
