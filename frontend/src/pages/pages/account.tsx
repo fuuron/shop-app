@@ -1,5 +1,4 @@
 import styles from '../../styles/account.module.css'
-import Layout from '../../components/layout'
 import { useEffect, useState } from 'react'
 import router from 'next/router'
 import axios from 'axios'
@@ -29,14 +28,14 @@ const AcccountPage = () => {
   const handleLogout = () => {
     http.post('/api/logout').then((res) => {
       console.log(res);
-      router.push('http://localhost:3000/pages/login');
+      location.href = 'http://localhost:3000/pages/login';
     })
   }
 
   const handleDestroy = () => {
     http.post('/api/destroy').then((res) => {
       console.log(res);
-      router.push('http://localhost:3000/pages/register');
+      location.href = 'http://localhost:3000/pages/register';
     })
   }
 
@@ -45,7 +44,7 @@ const AcccountPage = () => {
   }
 
   return (
-    <Layout>
+    <div>
       <div className={styles.accountInformation}>
         
         <h2 className={styles.header}>
@@ -78,8 +77,7 @@ const AcccountPage = () => {
           ログアウト
         </div>
       </div>
-
-    </Layout>
+    </div>
   )
 }
 

@@ -13,9 +13,9 @@ const http = axios.create({
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
-  const {data: user} = useSWR('http://localhost/api/user', () =>
+  const { data: user } = useSWR('http://localhost/api/user', () =>
     http.get('http://localhost/api/user')
-    .then(res => res.data)
+      .then(res => res.data)
   )
 
   return (
@@ -26,7 +26,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <ul className='menu-group'>
             <li className='menu-item'><a href='#'>項目1</a></li>
             <li className='menu-item'><a href='#'>a</a></li>
-            <li className='menu-item'><a href={user ? '/pages/account' : '/pages/login'}>{user ? user.name : 'ログイン'}</a></li>
+            <li className='menu-item'>
+              <a href={user ? '/pages/account' : '/pages/login'}>
+                {user ? user.name : 'ログイン'}
+              </a>
+            </li>
             <li className='menu-item'><a href='/pages/register'>新規登録</a></li>
           </ul>
         </nav>
