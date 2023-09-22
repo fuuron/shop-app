@@ -1,12 +1,11 @@
 import styles from '../../styles/account.module.css'
-import Layout from '../../components/layout'
 import { useEffect, useState } from 'react'
 import router from 'next/router'
 import axios from 'axios'
 
 const http = axios.create({
   baseURL: 'http://localhost',
-  withCredentials: true,
+  withCredentials: true
 })
 
 const AcccountPage = () => {
@@ -27,25 +26,25 @@ const AcccountPage = () => {
   }, [])
 
   const handleLogout = () => {
-    http.post("/api/logout").then((res) => {
+    http.post('/api/logout').then((res) => {
       console.log(res);
-      router.push("http://localhost:3000/pages/login");
+      location.href = 'http://localhost:3000/pages/login';
     })
   }
 
   const handleDestroy = () => {
-    http.post("/api/destroy").then((res) => {
+    http.post('/api/destroy').then((res) => {
       console.log(res);
-      router.push("http://localhost:3000/pages/register");
+      location.href = 'http://localhost:3000/pages/register';
     })
   }
 
   const editRouter = () => {
-    router.push("http://localhost:3000/pages/edit");
+    router.push('http://localhost:3000/pages/edit');
   }
 
   return (
-    <Layout>
+    <div>
       <div className={styles.accountInformation}>
         
         <h2 className={styles.header}>
@@ -56,13 +55,13 @@ const AcccountPage = () => {
           <h3>
             ユーザー名
           </h3>
-          {responseData ? responseData.name : "Loading..."}
+          {responseData ? responseData.name : 'Loading...'}
         </div>
         <div className={styles.accountData}>
           <h3>
             mailアドレス
           </h3>
-          {responseData ? responseData.email : "Loading..."}
+          {responseData ? responseData.email : 'Loading...'}
         </div>
 
       </div>
@@ -78,8 +77,7 @@ const AcccountPage = () => {
           ログアウト
         </div>
       </div>
-
-    </Layout>
+    </div>
   )
 }
 

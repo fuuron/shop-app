@@ -1,13 +1,11 @@
 import styles from '../../styles/login.module.css'
-import Layout from '../../components/layout'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import router from 'next/router'
 import axios from 'axios'
 
 const http = axios.create({
   baseURL: 'http://localhost',
-  withCredentials: true,
+  withCredentials: true
 })
 
 const Login = () => {
@@ -28,7 +26,7 @@ const Login = () => {
       console.log(responseData);
   
       if (responseData.accountPageUrl) {
-        router.push(responseData.accountPageUrl);
+        location.href = responseData.accountPageUrl;
       }
       
     } catch (error) {
@@ -40,36 +38,34 @@ const Login = () => {
   }
 
   return (
-    <Layout>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 
-        {/* <div>
-          <label>ユーザー名</label>
-          <input {...register('name', { required: true })} />
-          {errors.name && <span>ユーザー名を入力してください</span>}
-        </div> */}
+      {/* <div>
+        <label>ユーザー名</label>
+        <input {...register('name', { required: true })} />
+        {errors.name && <span>ユーザー名を入力してください</span>}
+      </div> */}
 
-        <div>
-          <label>email</label>
-          <input {...register('email', { required: true })} />
-          {errors.email && <span>emailを入力してください</span>}
+      <div>
+        <label>email</label>
+        <input {...register('email', { required: true })} />
+        {errors.email && <span>emailを入力してください</span>}
+      </div>
+
+      {errorResponseData && (
+        <div className='error-message'>
+          {errorResponseData}
         </div>
+      )}
 
-        {errorResponseData && (
-          <div className="error-message">
-            {errorResponseData}
-          </div>
-        )}
+      <div>
+        <label>パスワード</label>
+        <input type='password' {...register('password', { required: true })} />
+        {errors.password && <span>パスワードを入力してください</span>}
+      </div>
 
-        <div>
-          <label>パスワード</label>
-          <input type="password" {...register('password', { required: true })} />
-          {errors.password && <span>パスワードを入力してください</span>}
-        </div>
-
-        <button type="submit">ログイン</button>
-      </form>
-    </Layout>
+      <button type='submit'>ログイン</button>
+    </form>
   )
 }
 
