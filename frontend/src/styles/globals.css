@@ -37,3 +37,9 @@ header {
 .menu-item a:hover {
   color: #f39c12; /* ホバー時のカラーを変更 */
 }
+
+footer {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

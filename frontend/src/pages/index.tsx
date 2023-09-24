@@ -1,7 +1,10 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import React  from 'react'
+import axios from 'axios'
+import useSWR from 'swr'
 
-export default function ProductsList () {
+const ProductsList = () => {
     return (
         <main className={styles.main}>
             <h2 className={styles.title}>example</h2>
@@ -25,3 +28,5 @@ export default function ProductsList () {
         </main>
     )
 }
+
+export default ProductsList;
