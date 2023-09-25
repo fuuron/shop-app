@@ -14,7 +14,11 @@ const http = axios.create({
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const { data: user, error, isLoading } = useSWR('http://localhost/api/user', () =>
-    http.get('http://localhost/api/user').then((res) => res.data)
+    http.get('http://localhost/api/user').then((res) => res.data),
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false
+    }
   )
 
   if (isLoading) {
