@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Models\User;
 
 /*
@@ -24,6 +25,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/destroy', [AuthController::class, 'destroy']);
 Route::post('/edit', [AuthController::class, 'edit']);
+
+Route::post('/post', [ProductController::class, 'post']);
+Route::get('/products', [ProductController::class, 'products']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
