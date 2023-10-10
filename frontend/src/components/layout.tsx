@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
       <div>
         <header>
-          <h1 className='title'><a href='/'>タイトル</a></h1>
+          <h1 className='title'><a href='/'>めだか屋</a></h1>
           <nav className='nav'>
             <ul className='menu-group'>
               {/* <li className='menu-item'><a href='#'>商品一覧</a></li>
@@ -52,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
       <div>
         <header>
-          <h1 className='title'><a href='/'>タイトル</a></h1>
+          <h1 className='title'><a href='/'>めだか屋</a></h1>
           <nav className='nav'>
             <ul className='menu-group'>
               <li className='menu-item'><a href='/pages/products'>商品一覧</a></li>

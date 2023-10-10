@@ -14,7 +14,6 @@ const Register = () => {
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
-    // console.log(data);
     try {
       await http.get('/sanctum/csrf-cookie');
       const response = await http.post('/api/register', data);

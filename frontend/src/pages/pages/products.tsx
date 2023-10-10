@@ -1,4 +1,5 @@
 import styles from '../../styles/products.module.css'
+import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
 
@@ -16,6 +17,10 @@ const Products = () => {
       revalidateOnFocus: false
     }
   )
+
+  const handleShowDetail = (productId) => {
+    router.push(`http://localhost:3000/pages/product/${productId}`);
+  }
 
   if (isLoading) {
     return (
@@ -40,7 +45,7 @@ const Products = () => {
           {products.map((product) => (
             <div className={styles.product} key={product.id}>
               <div className={styles.information}>
-                <div className={styles.title}>{product.title}</div>
+                <div className={styles.title} onClick={() => handleShowDetail(product.id)}>{product.title}</div>
                 <div>投稿者: {product.user_name}</div>
                 <div>種類: {product.type}</div>
                 <div>投稿日時: {new Date(product.updated_at).toLocaleString()}</div>
