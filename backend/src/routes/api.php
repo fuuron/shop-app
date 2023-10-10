@@ -28,6 +28,7 @@ Route::post('/edit', [AuthController::class, 'edit']);
 
 Route::post('/post', [ProductController::class, 'post']);
 Route::get('/products', [ProductController::class, 'products']);
+Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -48,6 +49,10 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
+        if (!$products) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
         $productsWithImageUrls = $products->map(function ($product) {
             return [
                 'user_name' => $product->user->name,
@@ -61,5 +66,20 @@ class ProductController extends Controller
         });
         
         return response()->json($productsWithImageUrls);
+    }
+
+    public function showDetail($id)
+    {
+        $user_id = Auth::user()->id;
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        $product->user_name = $product->user->name;
+        $product->photo = asset('images/' . $product->photo);
+
+        return response()->json(['product' => $product, 'user_id' => $user_id]);
     }
 }

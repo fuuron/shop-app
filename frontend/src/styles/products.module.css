@@ -22,7 +22,18 @@
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 5px;
-  }
+    text-decoration: underline;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.title:hover {
+    background-color: #ffffff;
+    cursor: pointer;
+}
 
 .information {
     text-align: left;

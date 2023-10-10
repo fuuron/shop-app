@@ -9,7 +9,6 @@ const http = axios.create({
 })
 
 const AcccountPage = () => {
-
   const [responseData, setResponseData] = useState(null);
 
   const fetchAccontInformation = () => {

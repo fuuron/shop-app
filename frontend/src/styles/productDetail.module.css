@@ -1,0 +1,42 @@
+.product {
+    display: block;
+    text-align:center;
+}
+
+.container {
+    padding-top: 1px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    background-color: #F0F0F0;
+    width: 600px;
+    height: 600px;
+}
+
+.breakWords {
+    word-wrap: break-word;
+    max-width: 40ch;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.imageContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.postDelate {
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #F0F0F0; 
+    padding: 10px;
+    width: 80px;
+    height: 20px;
+}
+
+.postDelate:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
