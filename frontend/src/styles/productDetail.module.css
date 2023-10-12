@@ -13,6 +13,12 @@
     height: 600px;
 }
 
+.productInformation {
+    background-color: #e7e7e7;
+    margin: 0 auto;
+    width: 500px;
+}
+
 .breakWords {
     word-wrap: break-word;
     max-width: 40ch;
@@ -32,7 +38,7 @@
     margin-top: 20px;
     background-color: #F0F0F0; 
     padding: 10px;
-    width: 80px;
+    width: 140px;
     height: 20px;
 }
 

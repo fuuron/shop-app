@@ -82,4 +82,15 @@ class ProductController extends Controller
 
         return response()->json(['product' => $product, 'user_id' => $user_id]);
     }
+
+    public function productDestroy($id)
+    {
+        $product = Product::find($id);
+        if ($product->user_id !== Auth::user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        } else {
+            $product->delete();
+            return response()->json(['message' => 'Product deleted'], 200);
+        }
+    }
 }
