@@ -25,7 +25,7 @@ header {
 
 .menu-item {
   float: left;
-  margin-left: 70px; /* 各メニュー項目の間隔を調整 */
+  margin-left: 70px;
 }
 
 .menu-item a {
@@ -35,7 +35,7 @@ header {
 }
 
 .menu-item a:hover {
-  color: #f39c12; /* ホバー時のカラーを変更 */
+  color: #f39c12;
 }
 
 footer {

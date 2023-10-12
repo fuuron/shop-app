@@ -22,14 +22,15 @@ const ProductDetail = () => {
 
   console.log(data);
 
-  const handleEdit = () => {
-    // 編集のロジックをここに追加
-    console.log('Edit clicked');
-  }
+  // const handleEdit = () => {
+  //   console.log('Edit clicked');
+  // }
 
-  const handleDelete = () => {
-    // 削除のロジックをここに追加
-    console.log('Delete clicked');
+  const handleDestroy = () => {
+    http.post(`/api/productDestroy/${productId}`).then((res) => {
+      console.log(res);
+      location.href = 'http://localhost:3000/pages/products';
+    })
   }
 
   if (isLoading) {
@@ -52,17 +53,19 @@ const ProductDetail = () => {
       <div className={styles.product}>
         <div className={styles.container}>
           <h1>{data.product.title}</h1>
-          <p>投稿者: {data.product.user_name}</p>
-          <p>種類: {data.product.type}</p>
-          <p className={styles.breakWords}>詳細: {data.product.detail}</p>
+          <div className={styles.productInformation}>
+            <p>投稿者: {data.product.user_name}</p>
+            <p>種類: {data.product.type}</p>
+            <p className={styles.breakWords}>詳細: {data.product.detail}</p>
+          </div>
           <div className={styles.imageContainer}>
             <img src={data.product.photo} width="400" height="auto" alt={data.product.title} />
           </div>
         </div>
         
         {data.user_id === data.product.user_id && (
-          <div className={styles.postDelate} onClick={handleDelete}>
-            削除
+          <div className={styles.postDelate} onClick={handleDestroy}>
+            投稿を削除する
           </div>
         )}
       </div>

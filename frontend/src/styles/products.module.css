@@ -28,11 +28,14 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 300px;
 }
 
 .title:hover {
     background-color: #ffffff;
     cursor: pointer;
+    width: auto;
+    max-width: 300px;
 }
 
 .information {
