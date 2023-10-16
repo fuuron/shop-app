@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CommentController;
 use App\Models\User;
 
 /*
@@ -30,6 +31,8 @@ Route::post('/post', [ProductController::class, 'post']);
 Route::get('/products', [ProductController::class, 'products']);
 Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
 Route::post('/productDestroy/{id}', [ProductController::class, 'productDestroy']);
+
+Route::post('/commentPost/{id}', [CommentController::class, 'commentPost']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

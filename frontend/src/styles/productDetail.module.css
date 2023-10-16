@@ -1,9 +1,9 @@
-.product {
+.productDetail {
     display: block;
     text-align:center;
 }
 
-.container {
+.productContainer {
     padding-top: 1px;
     margin: 0 auto;
     margin-top: 40px;
@@ -13,7 +13,7 @@
     height: 600px;
 }
 
-.productInformation {
+.information {
     background-color: #e7e7e7;
     margin: 0 auto;
     width: 500px;
@@ -45,4 +45,95 @@
 .postDelate:hover {
     background-color: #ccc;
     cursor: pointer;
+}
+
+.form {
+    background-color: rgb(255, 236, 205);
+    border-radius: 10px; 
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    padding-bottom: 10px;
+}
+
+.form h2 {
+    border-bottom: 3px solid #8f8f8f;
+    padding-top: 10px;
+}
+
+.commentsArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.commentsInput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 70%;
+}
+
+.customButton {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+  
+.customButton:hover {
+    background-color: #0056b3;
+}
+
+.productComments {
+    background-color: #F0F0F0;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 600px;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.commentInformation {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.user {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.comment {
+    background-color: #c9c9c9;
+    border-radius: 10px;
+    width: 300px;
+    margin-left: auto;
+}
+
+.commentText {
+    text-align: center;
+    white-space: pre-line;
+    word-wrap: break-word;
+}
+
+.createdAt {
+    font-size: 13px;
+}
+
+.productOwnerComment {
+    text-align: left;
+}
+
+.commentOwner {
+    background-color: #c9c9c9;
+    border-radius: 10px;
+    width: 300px;
+    margin-right: auto;
 }
