@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
@@ -71,16 +72,24 @@ class ProductController extends Controller
     public function showDetail($id)
     {
         $user_id = Auth::user()->id;
-        $product = Product::find($id);
 
+        $product = Product::find($id);
+        $product->user_name = $product->user->name;
+        $product->photo = asset('images/' . $product->photo);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        $product->user_name = $product->user->name;
-        $product->photo = asset('images/' . $product->photo);
+        $comments = Comment::where('product_id', $id)->get();
+        foreach ($comments as $comment) {
+            $comment->user_name = $comment->user->name;
+        }
 
-        return response()->json(['product' => $product, 'user_id' => $user_id]);
+        return response()->json([
+            'product' => $product,
+            'user_id' => $user_id,
+            'comments' => $comments
+        ], 200);
     }
 
     public function productDestroy($id)
