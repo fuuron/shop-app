@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Comment;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
@@ -54,6 +55,9 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
+        $userId = Auth::user()->id;
+        $favoriteProducts = Favorite::where('user_id', $userId)->get();
+
         $productsWithImageUrls = $products->map(function ($product) {
             return [
                 'user_name' => $product->user->name,
@@ -66,7 +70,10 @@ class ProductController extends Controller
             ];
         });
         
-        return response()->json($productsWithImageUrls);
+        return response()->json([
+            'products' => $productsWithImageUrls,
+            'favorites' => $favoriteProducts
+        ], 200);
     }
 
     public function showDetail($id)

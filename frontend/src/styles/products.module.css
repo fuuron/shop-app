@@ -3,13 +3,12 @@
 }
 
 .products {
-    padding-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 40px;
 }
 
 .product {
     margin: 0 auto;
-    margin-bottom: 20px;
     background-color: #F0F0F0;
     width: 600px;
     height: 150px;
@@ -47,4 +46,32 @@
     display: flex;
     align-items: center;
     margin-right: 50px;
+}
+
+.favoriteButton {
+    margin-top: 5px;
+    margin-right: 450px;
+    margin-bottom: 20px;
+}
+
+.favoriteButton button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 150px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.favoriteButton button:hover {
+    background-color: #2373a1;
+}
+
+.favoriteButton button.favorited {
+    background-color: #e74c3c;
+}
+
+.favoriteButton button.favorited:hover {
+    background-color: #c0392b;
 }
