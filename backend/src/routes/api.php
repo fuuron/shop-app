@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FavoriteController;
 use App\Models\User;
 
 /*
@@ -18,9 +19,6 @@ use App\Models\User;
 |
 */
 
-// Route::get('/create', [RegisterController::class, 'create']);　実験
-// Route::get('/check-login-status', [AuthController::class, 'checkLoginStatus']);
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -33,6 +31,9 @@ Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
 Route::post('/productDestroy/{id}', [ProductController::class, 'productDestroy']);
 
 Route::post('/commentPost/{id}', [CommentController::class, 'commentPost']);
+
+Route::post('/favorite/add', [FavoriteController::class, 'addFavorite']);
+Route::post('/favorite/remove/{id}', [FavoriteController::class, 'removeFavorite']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

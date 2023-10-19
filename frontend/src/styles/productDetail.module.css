@@ -68,6 +68,10 @@
     align-items: center;
 }
 
+.doComments {
+    font-weight: bold;
+}
+
 .commentsInput {
     margin-top: 10px;
     margin-bottom: 10px;

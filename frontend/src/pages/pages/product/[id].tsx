@@ -95,7 +95,7 @@ const ProductDetail = () => {
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <h2 className={styles.commentsArea}>コメント＆質問欄</h2>
           <div>
-            <div>＜コメントする＞</div>
+            <div className={styles.doComments}>＜コメントする＞</div>
             <input className={styles.commentsInput} {...register('text', { required: true })} />
             {errors.text && <div>テキストを入力してください</div>}
           </div>
@@ -124,7 +124,7 @@ const ProductDetail = () => {
                 </div>
               ) : (
                 <>
-                  <div className={styles.user}>User: {comment.user_name}</div>
+                  <div className={styles.user}>ユーザー: {comment.user_name}</div>
                   <div className={styles.comment}>
                     <div className={styles.commentText}>
                       {comment.text}
