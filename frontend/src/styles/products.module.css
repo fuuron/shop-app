@@ -2,6 +2,28 @@
     text-align:center;
 }
 
+.productsFilterButtons {
+    background-color: #F0F0F0;
+    margin: 0 auto;
+    width: 500px;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.productsFilterButtons button {
+    background-color: #5dabff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.productsFilterButtons button:hover {
+    background-color: #2890ff;
+}
+
 .products {
     margin-top: 50px;
     margin-bottom: 40px;
