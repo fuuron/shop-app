@@ -26,6 +26,7 @@ const Products = () => {
   }
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const toggleFavorite = (productId) => {
     if (favoriteProducts.includes(productId)) {
@@ -67,8 +68,14 @@ const Products = () => {
     if (data) {
       const favoriteIds = data.favorites.map((favorite) => favorite.product_id);
       setFavoriteProducts(favoriteIds);
+      setFilteredProducts(data.products);
     }
   }, [data]);
+
+  const handleFilterCategory = (category) => {
+    const filteredProducts = data.products.filter((product) => product.type === category);
+    setFilteredProducts(filteredProducts);
+  };
   
   if (isLoading) {
     return (
@@ -89,8 +96,15 @@ const Products = () => {
     return (
       <div className={styles.main}>
         <h1>商品一覧</h1>
+
+        <div className={styles.productsFilterButtons}>
+          <button onClick={() => handleFilterCategory('メダカ')}>メダカ</button>
+          <button onClick={() => handleFilterCategory('水槽')}>水槽</button>
+          <button onClick={() => handleFilterCategory('エサ')}>エサ</button>
+        </div>
+
         <div className={styles.products}>
-          {data.products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product.id}>
               <div className={styles.product}>
                 <div className={styles.information}>
