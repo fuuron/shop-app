@@ -14,9 +14,9 @@ const Post = () => {
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
-    const formData = new FormData(); // FormDataオブジェクトを定義する
+    const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('type', data.type); // 種類の値を追加
+    formData.append('type', data.type);
     formData.append('detail', data.detail);
     formData.append('photo', data.photo[0]);
     console.log(formData);

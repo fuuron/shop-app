@@ -27,6 +27,7 @@ const Products = () => {
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [favoriteCounts, setFavoriteCounts] = useState([]); 
 
   const toggleFavorite = (productId) => {
     if (favoriteProducts.includes(productId)) {
@@ -43,7 +44,11 @@ const Products = () => {
   
       if (response.data) {
         setFavoriteProducts([...favoriteProducts, productId]);
-        console.log(response.data.success);
+        console.log(response.data);
+        setFavoriteCounts((prevCounts) => ({
+          ...prevCounts,
+          [productId]: (prevCounts[productId] || 0) + 1,
+        }));
       }
     } catch (error) {
       console.error('Failed to add favorite:', error);
@@ -57,7 +62,11 @@ const Products = () => {
   
       if (response.data) {
         setFavoriteProducts(favoriteProducts.filter((id) => id !== productId));
-        console.log(response.data.success);
+        console.log(response.data);
+        setFavoriteCounts((prevCounts) => ({
+          ...prevCounts,
+          [productId]: (prevCounts[productId] || 0) - 1,
+        }));
       }
     } catch (error) {
       console.error('Failed to remove favorite:', error);
@@ -69,6 +78,7 @@ const Products = () => {
       const favoriteIds = data.favorites.map((favorite) => favorite.product_id);
       setFavoriteProducts(favoriteIds);
       setFilteredProducts(data.products);
+      setFavoriteCounts(data.favoriteCounts);
     }
   }, [data]);
 
@@ -120,7 +130,8 @@ const Products = () => {
 
               <div className={styles.favoriteButton}>
                 <button className={favoriteProducts.includes(product.id) ? `${styles.favorited}` : ''} onClick={() => toggleFavorite(product.id)}>
-                  {favoriteProducts.includes(product.id) ? '気になる済み' : '気になる'}
+                  {favoriteProducts.includes(product.id) ? '気になる済み：' : '気になる：'}
+                  {favoriteCounts[product.id]}
                 </button>
               </div>
             </div>
