@@ -18,9 +18,12 @@ class FavoriteController extends Controller
         $favorite = new Favorite();
         $favorite->user_id = Auth::user()->id;
         $favorite->product_id = $productId;
-        $favorite->save();
-
-        return response()->json(['message' => 'お気に入りが登録されました'], 200);
+        
+        if ($favorite->save()) {
+            return response()->json(['message' => 'お気に入りが登録されました'], 200);
+        } else {
+            return response()->json(['message' => 'お気に入りの登録に失敗しました'], 401);
+        }
     }
 
     public function removeFavorite($id)
@@ -29,8 +32,11 @@ class FavoriteController extends Controller
 
         $favorite = Favorite::where('user_id', $userId)->where('product_id', $id);
 
-        $favorite->delete();
-        
-        return response()->json(['message' => 'お気に入りが削除されました'], 200);
+        if ($favorite) {
+            $favorite->delete();
+            return response()->json(['message' => 'お気に入りが削除されました'], 200);
+        } else {
+            return response()->json(['message' => 'お気に入りは既に削除されています'], 401);
+        }
     }
 }

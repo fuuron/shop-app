@@ -69,10 +69,18 @@ class ProductController extends Controller
                 'updated_at' => $product->updated_at
             ];
         });
+
+        $favoriteCounts = [];
+        foreach ($products as $product) {
+            $productId = $product->id;
+            $favoriteCount = Favorite::where('product_id', $productId)->count();
+            $favoriteCounts[$productId] = $favoriteCount;
+        }
         
         return response()->json([
             'products' => $productsWithImageUrls,
-            'favorites' => $favoriteProducts
+            'favorites' => $favoriteProducts,
+            'favoriteCounts' => $favoriteCounts
         ], 200);
     }
 

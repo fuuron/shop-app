@@ -14,21 +14,17 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      // 1. CSRF トークンを取得
       http.get('/sanctum/csrf-cookie');
-  
-      // 2. データを送信
+
       const response = await http.post('/api/login', data);
       console.log(response);
-  
-      // 3. レスポンスを処理
+
       const responseData = response.data;
       console.log(responseData);
-  
+
       if (responseData.accountPageUrl) {
         location.href = responseData.accountPageUrl;
       }
-      
     } catch (error) {
       console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data;
