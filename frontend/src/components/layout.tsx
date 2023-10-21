@@ -57,8 +57,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <ul className='menu-group'>
               <li className='menu-item'><a href='/pages/products'>商品一覧</a></li>
               <li className='menu-item'><a href='/pages/post'>商品投稿</a></li>
+              <li className='menu-item'><a href='/pages/favorite'>いいね一覧</a></li>
               <li className='menu-item'><a href='/pages/account'>{user.name}</a></li>
-              {/* <li className='menu-item'><a href='/pages/register'>新規登録</a></li> */}
             </ul>
           </nav>
         </header>

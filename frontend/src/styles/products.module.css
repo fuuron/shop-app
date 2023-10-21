@@ -97,3 +97,17 @@
 .favoriteButton button.favorited:hover {
     background-color: #c0392b;
 }
+
+.productsNotFound {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 70px;
+    margin-bottom: 400px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    color: #333;
+    font-size: 18px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 600px;
+}
