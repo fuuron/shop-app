@@ -9,10 +9,10 @@ const http = axios.create({
   withCredentials: true
 })
 
-const Products = () => {
+const Favorite = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/products', () =>
-    http.get('http://localhost/api/products').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR('http://localhost/api/userFavorite', () =>
+    http.get('http://localhost/api/userFavorite').then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -142,10 +142,10 @@ const Products = () => {
   } else {
     return (
       <div className={styles.productsNotFound}>
-        投稿された商品がありません
+        お気に入りがありません
       </div>
     )
   }
 }
 
-export default Products;
+export default Favorite;

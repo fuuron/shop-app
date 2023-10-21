@@ -27,6 +27,7 @@ Route::post('/edit', [AuthController::class, 'edit']);
 
 Route::post('/post', [ProductController::class, 'post']);
 Route::get('/products', [ProductController::class, 'products']);
+Route::get('/userFavorite', [ProductController::class, 'userFavorite']);
 Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
 Route::post('/productDestroy/{id}', [ProductController::class, 'productDestroy']);
 

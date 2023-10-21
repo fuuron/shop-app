@@ -51,11 +51,44 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        if (!$products) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
         $userId = Auth::user()->id;
+        $favoriteProducts = Favorite::where('user_id', $userId)->get();
+
+        $productsWithImageUrls = $products->map(function ($product) {
+            return [
+                'user_name' => $product->user->name,
+                'id' => $product->id,
+                'title' => $product->title,
+                'type' => $product->type,
+                // 'detail' => $product->detail,
+                'photo' => asset('images/' . $product->photo),
+                'updated_at' => $product->updated_at
+            ];
+        });
+
+        $favoriteCounts = [];
+        foreach ($products as $product) {
+            $productId = $product->id;
+            $favoriteCount = Favorite::where('product_id', $productId)->count();
+            $favoriteCounts[$productId] = $favoriteCount;
+        }
+        
+        return response()->json([
+            'products' => $productsWithImageUrls,
+            'favorites' => $favoriteProducts,
+            'favoriteCounts' => $favoriteCounts
+        ], 200);
+    }
+
+    public function userFavorite()
+    {
+        $userId = Auth::user()->id;
+        
+        $favoriteProducts = Favorite::where('user_id', $userId)
+            ->pluck('product_id')
+            ->toArray();
+        $products = Product::whereIn('id', $favoriteProducts)->get();
+
         $favoriteProducts = Favorite::where('user_id', $userId)->get();
 
         $productsWithImageUrls = $products->map(function ($product) {
