@@ -1,5 +1,5 @@
 import styles from '../../styles/products.module.css'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
@@ -105,7 +105,7 @@ const Favorite = () => {
   if (data.products && data.products.length > 0) {
     return (
       <div className={styles.main}>
-        <h1>商品一覧</h1>
+        <h1>お気に入り一覧</h1>
 
         <div className={styles.productsFilterButtons}>
           <button onClick={() => handleFilterCategory('メダカ')}>メダカ</button>

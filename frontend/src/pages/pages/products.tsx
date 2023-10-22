@@ -129,15 +129,15 @@ const Products = () => {
               </div>
 
               {data.authUserId === product.user_id ? (
+                <div className={styles.ownProductMessage}>
+                  自分の投稿です
+                </div>
+              ) : (
                 <div className={styles.favoriteButton}>
                   <button className={favoriteProducts.includes(product.id) ? `${styles.favorited}` : ''} onClick={() => toggleFavorite(product.id)}>
                     {favoriteProducts.includes(product.id) ? '気になる済み：' : '気になる：'}
                     {favoriteCounts[product.id]}
                   </button>
-                </div>
-              ) : (
-                <div className={styles.ownProductMessage}>
-                  自分の投稿です
                 </div>
               )}
             </div>

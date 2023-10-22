@@ -37,3 +37,25 @@
     background-color: #ccc;
     cursor: pointer;
 }
+
+.userProducts {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.productsHeader {
+    font-size: 24px;
+    color: #333;
+    margin-top: 50px;
+    text-align: center;
+}
+  
+.userGreeting {
+    color: #007bff; /* Change to your desired color */
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.product {
+    margin-bottom: 20px;
+}
