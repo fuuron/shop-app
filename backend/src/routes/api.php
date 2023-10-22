@@ -19,6 +19,7 @@ use App\Models\User;
 |
 */
 
+Route::get('/userInformation', [AuthController::class, 'userInformation']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);

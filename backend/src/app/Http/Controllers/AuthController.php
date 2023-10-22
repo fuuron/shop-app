@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -39,13 +40,37 @@ class AuthController extends Controller
             $user = User::whereEmail($request->email)->first();
             $user->tokens()->delete();
             $token = $user->createToken("login:user{$user->id}")->plainTextToken;
-            //ログインが成功した場合はトークンを返す
+
             return response()->json([
                 'token' => $token,
                 'accountPageUrl' => '/pages/account'
             ], Response::HTTP_OK);
         }
         return response()->json('emailまたはパスワードが間違っています', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function userInformation(Request $request)
+    {
+        $user = Auth::user();
+        $userProductsWithoutImages = Product::where('user_id', $user->id)->get();
+
+        $userProducts = $userProductsWithoutImages->map(function ($product) {
+            return [
+                'user_name' => $product->user->name,
+                'id' => $product->id,
+                'user_id' => $product->user_id,
+                'title' => $product->title,
+                'type' => $product->type,
+                // 'detail' => $product->detail,
+                'photo' => asset('images/' . $product->photo),
+                'updated_at' => $product->updated_at
+            ];
+        });
+
+        return response()->json([
+            'user' => $user,
+            'userProducts' => $userProducts
+        ], 200);
     }
 
     public function logout(Request $request)
