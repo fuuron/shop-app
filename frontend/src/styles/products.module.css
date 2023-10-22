@@ -98,6 +98,18 @@
     background-color: #c0392b;
 }
 
+.ownProductMessage {
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    background-color: #F0F0F0;
+    border-radius: 5px;
+    width: 600px;
+    height: 26px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .productsNotFound {
     text-align: center;
     margin: 0 auto;

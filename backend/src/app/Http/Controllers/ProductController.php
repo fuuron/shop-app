@@ -58,6 +58,7 @@ class ProductController extends Controller
             return [
                 'user_name' => $product->user->name,
                 'id' => $product->id,
+                'user_id' => $product->user_id,
                 'title' => $product->title,
                 'type' => $product->type,
                 // 'detail' => $product->detail,
@@ -76,7 +77,8 @@ class ProductController extends Controller
         return response()->json([
             'products' => $productsWithImageUrls,
             'favorites' => $favoriteProducts,
-            'favoriteCounts' => $favoriteCounts
+            'favoriteCounts' => $favoriteCounts,
+            'authUserId' => $userId
         ], 200);
     }
 
