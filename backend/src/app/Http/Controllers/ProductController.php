@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -30,7 +32,8 @@ class ProductController extends Controller
         } else {
             if ($request->hasFile('photo')) {
                 $image = $request->file('photo');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $randomString = Str::random(10);
+                $imageName = time() . '_' . $randomString . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imageName);
             }
             Product::create([
@@ -43,7 +46,7 @@ class ProductController extends Controller
             return response()->json([
                 'message' => '商品が正常に保存されました',
                 'productsPageUrl' => '/pages/products'
-            ], Response::HTTP_OK);
+            ], 200);
         }
     }
 
@@ -148,6 +151,10 @@ class ProductController extends Controller
         if ($product->user_id !== Auth::user()->id) {
             return response()->json(['message' => 'Unauthorized'], 401);
         } else {
+            $imagePath = public_path('images/' . $product->photo);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
             $product->delete();
             return response()->json(['message' => 'Product deleted'], 200);
         }
