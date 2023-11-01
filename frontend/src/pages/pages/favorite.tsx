@@ -85,7 +85,11 @@ const Favorite = () => {
   const handleFilterCategory = (category) => {
     const filteredProducts = data.products.filter((product) => product.type === category);
     setFilteredProducts(filteredProducts);
-  };
+  }
+
+  const purchaseRouter = () => {
+    router.push('http://localhost:3000/pages/purchase');
+  }
   
   if (isLoading) {
     return (
@@ -106,6 +110,8 @@ const Favorite = () => {
     return (
       <div className={styles.main}>
         <h1>お気に入り一覧</h1>
+
+        <h2 onClick={purchaseRouter}>購入する</h2>
 
         <div className={styles.productsFilterButtons}>
           <button onClick={() => handleFilterCategory('メダカ')}>メダカ</button>

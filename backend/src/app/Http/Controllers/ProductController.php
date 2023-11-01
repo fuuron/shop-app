@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Comment;
 use App\Models\Favorite;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
@@ -52,16 +53,18 @@ class ProductController extends Controller
 
     public function products()
     {
-        $products = Product::all();
-
+        $products = Product::whereNotIn('id', function ($query) {
+            $query->select('product_id')->from('purchases');
+        })->get();
+        
         $userId = Auth::user()->id;
         $favoriteProducts = Favorite::where('user_id', $userId)->get();
 
         $productsWithImageUrls = $products->map(function ($product) {
             return [
-                'user_name' => $product->user->name,
                 'id' => $product->id,
                 'user_id' => $product->user_id,
+                'user_name' => $product->user->name,
                 'title' => $product->title,
                 'type' => $product->type,
                 // 'detail' => $product->detail,
@@ -92,7 +95,9 @@ class ProductController extends Controller
         $favoriteProducts = Favorite::where('user_id', $userId)
             ->pluck('product_id')
             ->toArray();
-        $products = Product::whereIn('id', $favoriteProducts)->get();
+        $productsAll = Product::whereIn('id', $favoriteProducts)->get();
+        $products = $productsAll->whereNotIn('id', Purchase::pluck('product_id')->toArray())
+            ->values();
 
         $favoriteProducts = Favorite::where('user_id', $userId)->get();
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\PurchaseController;
 use App\Models\User;
 
 /*
@@ -36,6 +37,11 @@ Route::post('/commentPost/{id}', [CommentController::class, 'commentPost']);
 
 Route::post('/favorite/add', [FavoriteController::class, 'addFavorite']);
 Route::post('/favorite/remove/{id}', [FavoriteController::class, 'removeFavorite']);
+
+Route::get('/checkoutPage', [PurchaseController::class, 'checkoutPage']);
+Route::post('/purchase', [PurchaseController::class, 'purchase']);
+Route::get('/purchaseHistory', [PurchaseController::class, 'purchaseHistory']);
+Route::get('/sellHistory', [PurchaseController::class, 'sellHistory']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
