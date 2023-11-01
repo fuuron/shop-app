@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('buyer_user_id');
             $table->unsignedBigInteger('seller_user_id');
+            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('address_id');
             $table->timestamps();
+            $table->unique('product_id');
             $table
                 ->foreign('buyer_user_id')
                 ->references('id')
@@ -27,6 +29,10 @@ return new class extends Migration
                 ->foreign('seller_user_id')
                 ->references('id')
                 ->on('users');
+            $table
+                ->foreign('product_id')
+                ->references('id')
+                ->on('products');
             $table
                 ->foreign('address_id')
                 ->references('id')

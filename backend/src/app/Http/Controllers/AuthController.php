@@ -31,7 +31,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'User registration completed',
                 'LoginPageUrl' => '/pages/login'
-            ], Response::HTTP_OK);
+            ], 200);
         }
     }
 
@@ -46,7 +46,7 @@ class AuthController extends Controller
                 'accountPageUrl' => '/pages/account'
             ], Response::HTTP_OK);
         }
-        return response()->json('emailまたはパスワードが間違っています', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json('emailまたはパスワードが間違っています', 500);
     }
 
     public function userInformation(Request $request)
@@ -118,6 +118,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'ユーザー情報が編集されました',
             'LoginPageUrl' => '/pages/account'
-        ], Response::HTTP_OK);
+        ], 200);
     }
 }

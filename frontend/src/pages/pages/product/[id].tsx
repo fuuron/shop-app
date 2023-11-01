@@ -110,31 +110,35 @@ const ProductDetail = () => {
         </form>
         
         <div className={styles.productComments}>
-          {data.comments.slice().reverse().map(comment => (
-            <div key={comment.id} className={styles.commentInformation}>
-              {data.product.user_id === comment.user_id ? (
-                <div className={styles.productOwnerComment}>
-                  <div className={styles.user}>投稿者: {comment.user_name}</div>
-                  <div className={styles.commentOwner}>
-                    <div className={styles.commentText}>
-                      {comment.text}
+          {data.comments.length === 0 ? (
+            <div>コメントはありません</div>
+          ) : (
+            data.comments.slice().reverse().map(comment => (
+              <div key={comment.id} className={styles.commentInformation}>
+                {data.product.user_id === comment.user_id ? (
+                  <div className={styles.productOwnerComment}>
+                    <div className={styles.user}>投稿者: {comment.user_name}</div>
+                    <div className={styles.commentOwner}>
+                      <div className={styles.commentText}>
+                        {comment.text}
+                      </div>
                     </div>
+                    <div className={styles.createdAt}>Created At: {new Date(comment.updated_at).toLocaleString()}</div>
                   </div>
-                  <div className={styles.createdAt}>Created At: {new Date(comment.updated_at).toLocaleString()}</div>
-                </div>
-              ) : (
-                <>
-                  <div className={styles.user}>ユーザー: {comment.user_name}</div>
-                  <div className={styles.comment}>
-                    <div className={styles.commentText}>
-                      {comment.text}
+                ) : (
+                  <>
+                    <div className={styles.user}>ユーザー: {comment.user_name}</div>
+                    <div className={styles.comment}>
+                      <div className={styles.commentText}>
+                        {comment.text}
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.createdAt}>Created At: {new Date(comment.updated_at).toLocaleString()}</div>
-                </>
-              )}
-            </div>
-          ))}
+                    <div className={styles.createdAt}>Created At: {new Date(comment.updated_at).toLocaleString()}</div>
+                  </>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
     )

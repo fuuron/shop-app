@@ -35,8 +35,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <h1 className='title'><a href='/'>めだか屋</a></h1>
           <nav className='nav'>
             <ul className='menu-group'>
-              {/* <li className='menu-item'><a href='#'>商品一覧</a></li>
-              <li className='menu-item'><a href='#'>商品投稿</a></li> */}
               <li className='menu-item'><a href='/pages/login'>ログイン</a></li>
               <li className='menu-item'><a href='/pages/register'>新規登録</a></li>
             </ul>
@@ -58,6 +56,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <li className='menu-item'><a href='/pages/products'>商品一覧</a></li>
               <li className='menu-item'><a href='/pages/post'>商品投稿</a></li>
               <li className='menu-item'><a href='/pages/favorite'>いいね一覧</a></li>
+              <li className='menu-item'><a href='/pages/purchaseHistory'>購入履歴</a></li>
+              <li className='menu-item'><a href='/pages/sellHistory'>販売履歴</a></li>
               <li className='menu-item'><a href='/pages/account'>{user.name}</a></li>
             </ul>
           </nav>
