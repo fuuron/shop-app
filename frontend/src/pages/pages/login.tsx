@@ -2,6 +2,7 @@ import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import useSWR from 'swr'
 
 const http = axios.create({
   baseURL: 'http://localhost',
@@ -9,6 +10,15 @@ const http = axios.create({
 })
 
 const Login = () => {
+
+  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
+  http.get('http://localhost/api/user').then((res) => res.data),
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false
+    }
+  )
+
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
 
@@ -33,36 +43,45 @@ const Login = () => {
     }
   }
 
-  return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+  if (isLoading) {
+    return (
+      <>
+      </>
+    )
+  }
 
-      {/* <div>
-        <label>ユーザー名</label>
-        <input {...register('name', { required: true })} />
-        {errors.name && <span>ユーザー名を入力してください</span>}
-      </div> */}
-
-      <div>
-        <label>email</label>
-        <input {...register('email', { required: true })} />
-        {errors.email && <span>emailを入力してください</span>}
-      </div>
-
-      {errorResponseData && (
-        <div className='error-message'>
-          {errorResponseData}
+  if (error) {
+    return (
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+  
+        <div>
+          <label>email</label>
+          <input {...register('email', { required: true })} />
+          {errors.email && <span>emailを入力してください</span>}
         </div>
-      )}
+  
+        {errorResponseData && (
+          <div className='error-message'>
+            {errorResponseData}
+          </div>
+        )}
+  
+        <div>
+          <label>パスワード</label>
+          <input type='password' {...register('password', { required: true })} />
+          {errors.password && <span>パスワードを入力してください</span>}
+        </div>
+  
+        <button type='submit'>ログイン</button>
+      </form>
+    )
+  }
 
-      <div>
-        <label>パスワード</label>
-        <input type='password' {...register('password', { required: true })} />
-        {errors.password && <span>パスワードを入力してください</span>}
-      </div>
-
-      <button type='submit'>ログイン</button>
-    </form>
-  )
+  if (data) {
+    const errorMessage = '既にログインしています。';
+    alert(errorMessage);
+    location.href = 'http://localhost:3000/pages/account';
+  }
 }
 
 export default Login;
