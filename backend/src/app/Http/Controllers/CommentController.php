@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        // コメントの一覧を表示する処理
-    }
-
     public function commentPost(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -36,20 +31,5 @@ class CommentController extends Controller
                 'showDetailPageUrl' => '/pages/product/' . $id
             ], 200);
         }
-    }
-
-    public function show($id)
-    {
-        // 特定のコメントを表示する処理
-    }
-
-    public function update(Request $request, $id)
-    {
-        // コメントを更新する処理
-    }
-
-    public function destroy($id)
-    {
-        // コメントを削除する処理
     }
 }

@@ -138,6 +138,12 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
+        $productPurchased = 'false';
+        if ($product) {
+            $isPurchased = Purchase::where('product_id', $product->id)->exists();
+            $productPurchased = $isPurchased ? 'true' : 'false';
+        }
+
         $comments = Comment::where('product_id', $id)->get();
         foreach ($comments as $comment) {
             $comment->user_name = $comment->user->name;
@@ -146,7 +152,8 @@ class ProductController extends Controller
         return response()->json([
             'product' => $product,
             'user_id' => $user_id,
-            'comments' => $comments
+            'comments' => $comments,
+            'productPurchased' => $productPurchased
         ], 200);
     }
 

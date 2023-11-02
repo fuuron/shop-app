@@ -80,7 +80,7 @@ const ProductDetail = () => {
           </div>
         </div>
         
-        {data.user_id === data.product.user_id && (
+        {data.user_id === data.product.user_id && data.productPurchased === 'false' && (
           <div className={styles.postDelate} onClick={handleDestroy}>
             投稿を削除する
           </div>
