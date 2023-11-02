@@ -95,11 +95,9 @@ const Products = () => {
   }
 
   if (error) {
-    return (
-      <div>
-        <p>Error: {error.message}</p>
-      </div>
-    )
+    const errorMessage = 'セッションが切れました。再度ログインしてください。';
+    alert(errorMessage);
+    location.href = 'http://localhost:3000/pages/login';
   }
 
   if (data.products && data.products.length > 0) {

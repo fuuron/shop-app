@@ -51,9 +51,9 @@ const AcccountPage = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れました。再度ログインしてください。';
+    const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    router.push('http://localhost:3000/pages/login');
+    location.href = 'http://localhost:3000/pages/login';
   }
 
   if (data) {

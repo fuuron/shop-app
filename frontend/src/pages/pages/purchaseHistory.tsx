@@ -32,7 +32,7 @@ const PurchaseHistory = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れました。再度ログインしてください。';
+    const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
     location.href = 'http://localhost:3000/pages/login';
   }

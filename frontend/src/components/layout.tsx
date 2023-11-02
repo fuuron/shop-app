@@ -63,7 +63,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </nav>
         </header>
         <main>{children}</main>
-        <footer>Footer content</footer>
       </div>
     )
   }

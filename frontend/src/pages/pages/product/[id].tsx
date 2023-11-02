@@ -26,10 +26,6 @@ const ProductDetail = () => {
 
   console.log(data);
 
-  // const handleEdit = () => {
-  //   console.log('Edit clicked');
-  // }
-
   const handleDestroy = () => {
     http.post(`/api/productDestroy/${productId}`).then((res) => {
       console.log(res);
@@ -64,11 +60,9 @@ const ProductDetail = () => {
   }
 
   if (error) {
-    return (
-      <div>
-        <p>Error: {error.message}</p>
-      </div>
-    )
+    const errorMessage = 'セッションが切れています。再度ログインしてください。';
+    alert(errorMessage);
+    location.href = 'http://localhost:3000/pages/login';
   }
 
   if (data) {
