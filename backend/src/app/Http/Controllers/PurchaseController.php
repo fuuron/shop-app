@@ -17,11 +17,13 @@ class PurchaseController extends Controller
     public function checkoutPage()
     {
         $userId = Auth::user()->id;
-        
+
         $favoriteProducts = Favorite::where('user_id', $userId)
             ->pluck('product_id')
             ->toArray();
-        $products = Product::whereIn('id', $favoriteProducts)->get();
+        $productsAll = Product::whereIn('id', $favoriteProducts)->get();
+        $products = $productsAll->whereNotIn('id', Purchase::pluck('product_id')->toArray())
+            ->values();
         
         return response()->json([
             'products' => $products
@@ -52,8 +54,10 @@ class PurchaseController extends Controller
             $favoriteProducts = Favorite::where('user_id', $userId)
                 ->pluck('product_id')
                 ->toArray();
-            $products = Product::whereIn('id', $favoriteProducts)->get();
-
+            $productsAll = Product::whereIn('id', $favoriteProducts)->get();
+            $products = $productsAll->whereNotIn('id', Purchase::pluck('product_id')->toArray())
+                ->values();
+            
             $address = Address::create([
                 'postal_code' => $request->input('postal_code'),
                 'prefecture' => $request->input('prefecture'),
@@ -73,14 +77,10 @@ class PurchaseController extends Controller
                         'address_id' => $address->id
                     ]);
                 }
-            
-                DB::commit();
-            
-                return response()->json([
-                    'message' => '購入が成功しました',
-                    'purchaseHistoryPageUrl' => 'pages/purchaseHistory'
-                ], 200);
 
+                DB::commit();
+
+                return response()->json(['message' => '購入が成功しました'], 200);
             } catch (Exception $e) {
                 DB::rollback();
                 return response()->json(['message' => '購入中にエラーが発生しました'], 500);

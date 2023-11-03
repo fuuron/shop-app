@@ -53,26 +53,23 @@ const Login = () => {
   if (error) {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-  
-        <div>
-          <label>email</label>
-          <input {...register('email', { required: true })} />
-          {errors.email && <span>emailを入力してください</span>}
-        </div>
-  
         {errorResponseData && (
-          <div className='error-message'>
+          <div className={styles.serverErrorTopMessage}>
             {errorResponseData}
           </div>
         )}
-  
-        <div>
-          <label>パスワード</label>
-          <input type='password' {...register('password', { required: true })} />
-          {errors.password && <span>パスワードを入力してください</span>}
+
+        <div className={styles.formContent}>
+          <div className={styles.formTitle}>email</div>
+          <input className={styles.input} type='email' {...register('email', { required: true })} />
+          {errors.email && <div className={styles.emptyErrorMessage}>emailを入力してください</div>}
+
+          <div className={styles.formOtherTitle}>パスワード</div>
+          <input className={styles.input} type='password' {...register('password', { required: true })} />
+          {errors.password && <div className={styles.emptyErrorMessage}>パスワードを入力してください</div>}
         </div>
-  
-        <button type='submit'>ログイン</button>
+
+        <button className={styles.submit} type='submit'>ログイン</button>
       </form>
     )
   }

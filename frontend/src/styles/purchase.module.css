@@ -1,3 +1,29 @@
 .container {
     text-align: center;
 }
+
+.addressFormTitle {
+    margin-bottom: 20px;
+}
+
+.products {
+    padding: 10px;
+    background-color: #F0F0F0;
+    width: 420px;
+    margin: 0 auto;
+}
+
+.productTitle {
+    text-decoration: underline;
+}
+
+.productTitle:hover {
+    display: inline-block;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.productsLength {
+    margin-top: 10px;
+    font-weight: bold;
+}

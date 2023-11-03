@@ -2,9 +2,8 @@ header {
   display: flex;
   width: 70%;
   height: 80px;
-  margin: 8px;
-  margin-right: auto;
-  margin-left : auto;
+  margin: 10px;
+  margin: 0 auto;
   background-color: rgba(181, 212, 109, 0.788);
   align-items: center;
   padding: 0 10px;
@@ -20,12 +19,17 @@ header {
 }
 
 .menu-group {
-  padding-left: 300px;
+  margin-left: 60px;
+}
+
+.unauthorizedMenu-group {
+  margin-left: 300px;
 }
 
 .menu-item {
   float: left;
-  margin-left: 70px;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
 .menu-item a {
@@ -36,10 +40,4 @@ header {
 
 .menu-item a:hover {
   color: #f39c12;
-}
-
-footer {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }

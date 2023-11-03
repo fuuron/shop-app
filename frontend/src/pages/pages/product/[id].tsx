@@ -86,6 +86,12 @@ const ProductDetail = () => {
           </div>
         )}
 
+        {data.user_id === data.product.user_id && data.productPurchased === 'true' && (
+          <div className={styles.postPurchased}>
+            この商品は購入されました
+          </div>
+        )}
+
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <h2 className={styles.commentsArea}>コメント＆質問欄</h2>
           <div>

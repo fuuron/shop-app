@@ -109,7 +109,7 @@ const Favorite = () => {
       <div className={styles.main}>
         <h1>お気に入り一覧</h1>
 
-        <h2 onClick={purchaseRouter}>購入する</h2>
+        <h2 className={styles.purchaseButton} onClick={purchaseRouter}>購入する</h2>
 
         <div className={styles.productsFilterButtons}>
           <button onClick={() => handleFilterCategory('メダカ')}>メダカ</button>
