@@ -1,3 +1,36 @@
 .container {
     text-align: center;
 }
+
+.addressFormTitle {
+    margin-bottom: 20px;
+}
+
+.products {
+    padding: 10px;
+    background-color: #F0F0F0;
+    width: 420px;
+    margin: 0 auto;
+}
+
+@media (max-width: 650px) {
+    .products {
+        width: 80%;
+        padding: 20px;
+    }
+}
+
+.productTitle {
+    text-decoration: underline;
+}
+
+.productTitle:hover {
+    display: inline-block;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.productsLength {
+    margin-top: 10px;
+    font-weight: bold;
+}

@@ -69,7 +69,7 @@ const ProductDetail = () => {
     return (
       <div className={styles.productDetail}>
         <div className={styles.productContainer}>
-          <h1>{data.product.title}</h1>
+          <h1 className={styles.productTitle}>{data.product.title}</h1>
           <div className={styles.information}>
             <p>投稿者: {data.product.user_name}</p>
             <p>種類: {data.product.type}</p>
@@ -83,6 +83,12 @@ const ProductDetail = () => {
         {data.user_id === data.product.user_id && data.productPurchased === 'false' && (
           <div className={styles.postDelate} onClick={handleDestroy}>
             投稿を削除する
+          </div>
+        )}
+
+        {data.user_id === data.product.user_id && data.productPurchased === 'true' && (
+          <div className={styles.postPurchased}>
+            この商品は購入されました
           </div>
         )}
 
@@ -105,7 +111,7 @@ const ProductDetail = () => {
         
         <div className={styles.productComments}>
           {data.comments.length === 0 ? (
-            <div>コメントはありません</div>
+            <div className={styles.commentNotFound}>コメントはありません</div>
           ) : (
             data.comments.slice().reverse().map(comment => (
               <div key={comment.id} className={styles.commentInformation}>

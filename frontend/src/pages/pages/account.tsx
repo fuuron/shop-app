@@ -60,7 +60,7 @@ const AcccountPage = () => {
     return (
       <div>
         <div className={styles.accountInformation}>
-          <h2 className={styles.header}>
+          <h2 className={styles.accountHeader}>
             アカウント情報
           </h2>
           <div className={styles.accountData}>
@@ -99,15 +99,14 @@ const AcccountPage = () => {
         <div className={styles.userProducts}>
           {data.userProducts && data.userProducts.length > 0 ? (
             data.userProducts.map((product) => (
-              <div className={styles.product} key={product.id}>
+              <div key={product.id} className={styles.product}>
                 <div className={styles2.product}>
                   <div className={styles2.information}>
                     <div className={styles2.title} onClick={() => handleShowDetail(product.id)}>{product.title}</div>
-                    <div>投稿者: {product.user_name}</div>
                     <div>種類: {product.type}</div>
                     <div>投稿日時: {new Date(product.updated_at).toLocaleString()}</div>
                   </div>
-                  <div className={styles2.imageContainer}>
+                  <div className={styles.imageContainer}>
                     <img src={product.photo} width="200" height="auto" alt={product.title} />
                   </div>
                 </div>

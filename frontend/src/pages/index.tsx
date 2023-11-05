@@ -1,32 +1,36 @@
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import React  from 'react'
+import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
 
-const ProductsList = () => {
-    return (
-        <main className={styles.main}>
-            <h2 className={styles.title}>example</h2>
-            <ul>
-                <li>
-                    <Link href='/'>
-                        example1
-                    </Link>
-                </li>
-                <li>
-                    <Link href='/'>
-                        example2
-                    </Link>
-                </li>
-                <li>
-                    <Link href='/'>
-                        example3
-                    </Link>
-                </li>
-            </ul>
-        </main>
+const http = axios.create({
+    baseURL: 'http://localhost',
+    withCredentials: true
+})
+
+const Index = () => {
+
+    const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
+    http.get('http://localhost/api/user').then((res) => res.data),
+      {
+        shouldRetryOnError: false,
+        revalidateOnFocus: false
+      }
     )
+  
+    if (isLoading) {
+      return (
+        <>
+        </>
+      )
+    }
+
+    if (data) {
+        router.push('http://localhost:3000/pages/products');
+    }
+  
+    if (error) {
+        router.push('http://localhost:3000/pages/login');
+    }
 }
 
-export default ProductsList;
+export default Index;

@@ -1,143 +1,317 @@
-.productDetail {
-    display: block;
-    text-align:center;
+@media (max-width: 650px) {
+    .productDetail {
+        display: block;
+        text-align:center;
+    }
+
+    .productContainer {
+        padding-top: 1px;
+        margin: 0 auto;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        background-color: #F0F0F0;
+        width: 90%;
+        height: auto;
+    }
+
+    .productTitle {
+        font-size: 25px;
+    }
+
+    .information {
+        background-color: #e7e7e7;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .breakWords {
+        word-wrap: break-word;
+        max-width: 40ch;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .imageContainer {
+        margin-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .imageContainer img {
+        width: 70%;
+        height: auto;
+    }
+
+    .postDelate {
+        margin: 0 auto;
+        margin-top: 20px;
+        background-color: #F0F0F0; 
+        padding: 10px;
+        width: 140px;
+        height: 20px;
+    }
+
+    .postPurchased {
+        margin: 0 auto;
+        margin-top: 20px;
+        background-color: #F0F0F0; 
+        padding: 10px;
+        width: 60%;
+        height: auto;
+    }
+
+    .postDelate:hover {
+        background-color: #ccc;
+        cursor: pointer;
+    }
+
+    .form {
+        background-color: rgb(255, 236, 205);
+        border-radius: 10px; 
+        margin-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        padding-bottom: 10px;
+    }
+
+    .form h2 {
+        border-bottom: 3px solid #8f8f8f;
+        padding-top: 10px;
+    }
+
+    .commentsArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doComments {
+        font-weight: bold;
+    }
+
+    .commentsInput {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 70%;
+    }
+
+    .customButton {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .customButton:hover {
+        background-color: #0056b3;
+    }
+
+    .productComments {
+        background-color: #F0F0F0;
+        border-radius: 10px;
+        margin: 0 auto;
+        width: 90%;
+        margin-top: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .commentInformation {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        text-align: right;
+    }
+
+    .user {
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .comment {
+        background-color: #c9c9c9;
+        border-radius: 10px;
+        width: 70%;
+        margin-left: auto;
+    }
+
+    .commentText {
+        text-align: center;
+        white-space: pre-line;
+        word-wrap: break-word;
+    }
+
+    .createdAt {
+        font-size: 13px;
+    }
+
+    .productOwnerComment {
+        text-align: left;
+    }
+
+    .commentOwner {
+        background-color: #c9c9c9;
+        border-radius: 10px;
+        width: 70%;
+        margin-right: auto;
+    }
 }
 
-.productContainer {
-    padding-top: 1px;
-    margin: 0 auto;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    background-color: #F0F0F0;
-    width: 600px;
-    height: 600px;
-}
+@media (min-width: 650px) {
+    .productDetail {
+        display: block;
+        text-align:center;
+    }
 
-.information {
-    background-color: #e7e7e7;
-    margin: 0 auto;
-    width: 500px;
-}
+    .productContainer {
+        padding-top: 1px;
+        margin: 0 auto;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        background-color: #F0F0F0;
+        width: 600px;
+        height: 600px;
+    }
 
-.breakWords {
-    word-wrap: break-word;
-    max-width: 40ch;
-    margin: 0 auto;
-    text-align: center;
-}
+    .information {
+        background-color: #e7e7e7;
+        margin: 0 auto;
+        width: 500px;
+    }
 
-.imageContainer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
+    .breakWords {
+        word-wrap: break-word;
+        max-width: 40ch;
+        margin: 0 auto;
+        text-align: center;
+    }
 
-.postDelate {
-    margin: 0 auto;
-    margin-top: 20px;
-    background-color: #F0F0F0; 
-    padding: 10px;
-    width: 140px;
-    height: 20px;
-}
+    .imageContainer {
+        position: absolute;
+        top: 490px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 
-.postDelate:hover {
-    background-color: #ccc;
-    cursor: pointer;
-}
+    .postDelate {
+        margin: 0 auto;
+        margin-top: 20px;
+        background-color: #F0F0F0; 
+        padding: 10px;
+        width: 140px;
+        height: 20px;
+    }
 
-.form {
-    background-color: rgb(255, 236, 205);
-    border-radius: 10px; 
-    margin-top: 60px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-    padding-bottom: 10px;
-}
+    .postPurchased {
+        margin: 0 auto;
+        margin-top: 20px;
+        background-color: #F0F0F0; 
+        padding: 10px;
+        width: 250px;
+        height: 20px;
+    }
 
-.form h2 {
-    border-bottom: 3px solid #8f8f8f;
-    padding-top: 10px;
-}
+    .postDelate:hover {
+        background-color: #ccc;
+        cursor: pointer;
+    }
 
-.commentsArea {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .form {
+        background-color: rgb(255, 236, 205);
+        border-radius: 10px; 
+        margin-top: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 600px;
+        padding-bottom: 10px;
+    }
 
-.doComments {
-    font-weight: bold;
-}
+    .form h2 {
+        border-bottom: 3px solid #8f8f8f;
+        padding-top: 10px;
+    }
 
-.commentsInput {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 70%;
-}
+    .commentsArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.customButton {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-  
-.customButton:hover {
-    background-color: #0056b3;
-}
+    .doComments {
+        font-weight: bold;
+    }
 
-.productComments {
-    background-color: #F0F0F0;
-    border-radius: 10px;
-    margin: 0 auto;
-    width: 600px;
-    margin-top: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
+    .commentsInput {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 70%;
+    }
 
-.commentInformation {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    text-align: right;
-}
+    .customButton {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .customButton:hover {
+        background-color: #0056b3;
+    }
 
-.user {
-    font-weight: bold;
-    font-size: 13px;
-}
+    .productComments {
+        background-color: #F0F0F0;
+        border-radius: 10px;
+        margin: 0 auto;
+        width: 600px;
+        margin-top: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 
-.comment {
-    background-color: #c9c9c9;
-    border-radius: 10px;
-    width: 300px;
-    margin-left: auto;
-}
+    .commentInformation {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        text-align: right;
+    }
 
-.commentText {
-    text-align: center;
-    white-space: pre-line;
-    word-wrap: break-word;
-}
+    .user {
+        font-weight: bold;
+        font-size: 13px;
+    }
 
-.createdAt {
-    font-size: 13px;
-}
+    .comment {
+        background-color: #c9c9c9;
+        border-radius: 10px;
+        width: 300px;
+        margin-left: auto;
+    }
 
-.productOwnerComment {
-    text-align: left;
-}
+    .commentText {
+        text-align: center;
+        white-space: pre-line;
+        word-wrap: break-word;
+    }
 
-.commentOwner {
-    background-color: #c9c9c9;
-    border-radius: 10px;
-    width: 300px;
-    margin-right: auto;
+    .createdAt {
+        font-size: 13px;
+    }
+
+    .productOwnerComment {
+        text-align: left;
+    }
+
+    .commentOwner {
+        background-color: #c9c9c9;
+        border-radius: 10px;
+        width: 300px;
+        margin-right: auto;
+    }
 }

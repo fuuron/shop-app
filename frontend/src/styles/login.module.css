@@ -1,7 +1,103 @@
 .form {
-    padding: 4rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    text-align: center;
+    width: 400px;
+}
+
+@media (max-width: 500px) {
+    .form {
+      width: 80%;
+    }
+}
+
+.formContent {
+    margin: 0 auto;
+    width: 200px;
+}
+
+.formTitle {
+    text-align: left;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.input {
+    width: 190px;
+    height: 20px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.inputDetail {
+    width: 190px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.emptyErrorMessage {
+    font-size: 13px;
+    color: red;
+    white-space: nowrap;
+}
+
+.submit {
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit:hover {
+    background-color: #0056b3;
+}
+
+.formOtherTitle {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.inputType {
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.serverErrorTopMessage {
+    font-size: 13px;
+    color: red;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+.serverErrorMessage {
+    font-size: 13px;
+    color: red;
+    white-space: nowrap;
+}
+
+.selectFile {
+    width: 120px;
+    background-color: #dddddd;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.selectFile:hover {
+    background-color: #c9c9c9;
+}
+
+.notSelectedFile {
+    font-size: 13px;
 }

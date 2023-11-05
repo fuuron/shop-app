@@ -48,7 +48,7 @@ const Post = () => {
       
     } catch (error) {
       console.error('エラーが発生しました:', error);
-      const errorResponseData = error.response.data;
+      const errorResponseData = error.response.data.errors;
       console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
@@ -70,53 +70,56 @@ const Post = () => {
   if (data) {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>タイトル</label>
-          <input {...register('title', { required: true })} />
-          {errors.title && <span>タイトル名を入力してください</span>}
-        </div>
-  
-        {errorResponseData && (
-          <div className='error-message'>
-            {errorResponseData.errors.title}
-          </div>
-        )}
-  
-        <div>
-          <label>種類</label>
-          <select {...register('type', { required: true })}>
+        <div className={styles.formContent}>
+
+          <div className={styles.formTitle}>タイトル</div>
+          <input className={styles.input} type='title' {...register('title', { required: true })} />
+          {errors.title && <div className={styles.emptyErrorMessage}>タイトル名を入力してください</div>}
+          {errorResponseData && (
+            <div className={styles.serverErrorMessage}>
+              {errorResponseData.title}
+            </div>
+          )}
+
+          <div className={styles.formOtherTitle}>種類</div>
+          <select className={styles.inputType} {...register('type', { required: true })}>
             <option value="">選択してください</option>
             <option value="メダカ">メダカ</option>
             <option value="水槽">水槽</option>
             <option value="エサ">エサ</option>
           </select>
-          {errors.type && <span>種類を選択してください</span>}
-        </div>
-  
-        <div>
-          <label>説明</label>
-          <input {...register('detail', { required: true })} />
-          {errors.detail && <span>説明を入力してください</span>}
-        </div>
-  
-        {errorResponseData && (
-          <div className='error-message'>
-            {errorResponseData.errors.detail}
+          {errors.type && <div className={styles.emptyErrorMessage}>種類を選択してください</div>}
+
+          <div className={styles.formOtherTitle}>説明</div>
+          <textarea className={styles.inputDetail} {...register('detail', { required: true })} />
+          {errors.detail && <div className={styles.emptyErrorMessage}>説明を入力してください</div>}
+          {errorResponseData && (
+            <div className={styles.serverErrorMessage}>
+              {errorResponseData.detail}
+            </div>
+          )}
+          
+          <div className={styles.formOtherTitle}>商品写真</div>
+          <div>
+            <label htmlFor='fileInput' className='custom-file-upload'>
+              <input
+                type='file' {...register('photo', { required: true })}
+                id='fileInput'
+                style={{ display: 'none' }}
+                accept='image/*'
+              />
+              <div className={styles.selectFile}>ファイルを選択</div>
+            </label>
           </div>
-        )}
-  
-        <div>
-          <label>商品写真</label>
-          <input type="file" {...register('photo')} accept="image/*" />
+          {errors.photo && <div className={styles.emptyErrorMessage}>写真を選択してください</div>}
+          {errorResponseData && (
+            <div className={styles.serverErrorMessage}>
+              {errorResponseData.photo}
+            </div>
+          )}
+          
         </div>
-  
-        {errorResponseData && (
-          <div className='error-message'>
-            {errorResponseData.errors.photo}
-          </div>
-        )}
-  
-        <button type='submit'>商品登録</button>
+        <button className={styles.submit} type='submit'>商品投稿</button>
       </form>
     )
   }

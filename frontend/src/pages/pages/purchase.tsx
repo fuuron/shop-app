@@ -1,4 +1,5 @@
 import styles from '../../styles/purchase.module.css'
+import styles2 from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import router from 'next/router'
@@ -35,11 +36,7 @@ const Purchase = () => {
       const response = await http.post('/api/purchase', data);
       const responseData = response.data;
       console.log(responseData);
-      
-      if (responseData.purchaseHistoryPageUrl) {
-        router.push(responseData.purchaseHistoryPageUrl);
-      }
-      
+      router.push('http://localhost:3000/pages/purchaseHistory');
     } catch (error) {
       console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
@@ -68,7 +65,7 @@ const Purchase = () => {
   if (data.products && data.products.length > 0) {
     return (
       <div className={styles.container}>
-        <div>以下の商品を購入します</div>
+        <h2>以下の商品を購入します</h2>
         <div className={styles.products}>
           {data.products.map((product) => (
             <div key={product.id}>
@@ -78,27 +75,22 @@ const Purchase = () => {
             </div>
           ))}
         </div>
+        <div className={styles.productsLength}>以上  {data.products.length}点</div>
 
-        <div>お届け先を入力してください</div>
-
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>郵便番号</label>
-            <input {...register('postal_code', { required: true })} />
-            <div>
-              {errors.postal_code && <span>郵便番号を入力してください</span>}
-            </div>
-          </div>
-
-          {errorResponseData && (
-            <div className='error-message'>
-              {errorResponseData.postal_code}
-            </div>
-          )}
-
-          <div>
-            <label>都道府県</label>
-            <select {...register('prefecture', { required: true })}>
+        <form className={styles2.form} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.addressFormTitle}>お届け先を入力してください</div>
+          <div className={styles2.formContent}>
+            <div className={styles2.formTitle}>郵便番号</div>
+            <input className={styles2.input} type='text' {...register('postal_code', { required: true })} />
+            {errors.postal_code && <div className={styles2.emptyErrorMessage}>郵便番号を入力してください</div>}
+            {errorResponseData && (
+              <div className={styles2.serverErrorMessage}>
+                {errorResponseData.postal_code}
+              </div>
+            )}
+            
+            <div className={styles2.formOtherTitle}>都道府県</div>
+            <select className={styles2.inputType} {...register('prefecture', { required: true })}>
             <option value="">選択してください</option>
               <optgroup label="北海道地方">
                 <option value="北海道">北海道</option>
@@ -166,54 +158,37 @@ const Purchase = () => {
                 <option value="沖縄県">沖縄県</option>
               </optgroup>
             </select>
-            <div>
-              {errors.prefecture && <span>都道府県を選択してください</span>}
-            </div>
+            {errors.prefecture && <div className={styles2.emptyErrorMessage}>種類を選択してください</div>}
+            
+            <div className={styles2.formOtherTitle}>市区町村</div>
+            <input className={styles2.input} type='text'  {...register('municipality', { required: true })} />
+            {errors.municipality && <div className={styles2.emptyErrorMessage}>市区町村を入力してください</div>}
+            {errorResponseData && (
+              <div className={styles2.serverErrorMessage}>
+                {errorResponseData.municipality}
+              </div>
+            )}
+
+            <div className={styles2.formOtherTitle}>番地</div>
+            <input className={styles2.input} type='text'  {...register('block_number', { required: true })} />
+            {errors.block_number && <div className={styles2.emptyErrorMessage}>番地を入力してください</div>}
+            {errorResponseData && (
+              <div className={styles2.serverErrorMessage}>
+                {errorResponseData.block_number}
+              </div>
+            )}
+
+            <div className={styles2.formOtherTitle}>建物名・部屋番号</div>
+            <input className={styles2.input} type='text'  {...register('building_and_room', { required: true })} />
+            {errors.building_and_room && <div className={styles2.emptyErrorMessage}>建物名・部屋番号を入力してください</div>}
+            {errorResponseData && (
+              <div className={styles2.serverErrorMessage}>
+                {errorResponseData.building_and_room}
+              </div>
+            )}
           </div>
-
-          <div>
-            <label>市区町村</label>
-            <input {...register('municipality', { required: true })} />
-            <div>
-              {errors.municipality && <span>市区町村を入力してください</span>}
-            </div>
-          </div>
-
-          {errorResponseData && (
-            <div className='error-message'>
-              {errorResponseData.municipality}
-            </div>
-          )}
-
-          <div>
-            <label>番地</label>
-            <input {...register('block_number', { required: true })} />
-            <div>
-              {errors.block_number && <span>番地を入力してください</span>}
-            </div>
-          </div>
-
-          {errorResponseData && (
-            <div className='error-message'>
-              {errorResponseData.block_number}
-            </div>
-          )}
-
-          <div>
-            <label>建物名・部屋番号</label>
-            <input {...register('building_and_room', { required: true })} />
-            <div>
-              {errors.building_and_room && <span>建物名・部屋番号を入力してください</span>}
-            </div>
-          </div>
-
-          {errorResponseData && (
-            <div className='error-message'>
-              {errorResponseData.building_and_room}
-            </div>
-          )}
-
-          <button type='submit'>商品購入</button>
+          
+          <button className={styles2.submit} type='submit'>商品購入</button>
         </form>
       </div>
     )
