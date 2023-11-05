@@ -13,7 +13,7 @@
 
 .productInformation {
     background-color: rgb(255, 255, 255);
-    border-radius: 10px; 
+    border-radius: 10px;
     margin: 0 auto;
     width: 450px;
 }
@@ -53,5 +53,23 @@
     font-size: 18px;
     border: 2px dashed #ccc;
     border-radius: 10px;
-    width: 600px;
+    width: 40%;
+}
+
+@media (max-width: 650px) {
+    .purchaseHistory {
+        width: 80%;
+    }
+
+    .productInformation {
+        width: 80%;
+    }
+
+    .address {
+        width: 80%;
+    }
+
+    .purchasesNotFound {
+        width: 80%;
+    }
 }

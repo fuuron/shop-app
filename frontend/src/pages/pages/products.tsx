@@ -103,7 +103,7 @@ const Products = () => {
   if (data.products && data.products.length > 0) {
     return (
       <div className={styles.main}>
-        <h1>商品一覧</h1>
+        <h1 className={styles.h1Header}>商品一覧</h1>
 
         <div className={styles.productsFilterButtons}>
           <button onClick={() => handleFilterCategory('メダカ')}>メダカ</button>

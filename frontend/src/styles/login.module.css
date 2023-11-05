@@ -7,6 +7,12 @@
     width: 400px;
 }
 
+@media (max-width: 500px) {
+    .form {
+      width: 80%;
+    }
+}
+
 .formContent {
     margin: 0 auto;
     width: 200px;
@@ -78,4 +84,20 @@
     font-size: 13px;
     color: red;
     white-space: nowrap;
+}
+
+.selectFile {
+    width: 120px;
+    background-color: #dddddd;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.selectFile:hover {
+    background-color: #c9c9c9;
+}
+
+.notSelectedFile {
+    font-size: 13px;
 }

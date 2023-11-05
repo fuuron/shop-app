@@ -1,4 +1,4 @@
-.header {
+.accountHeader {
     padding-top: 40px;
 }
 
@@ -51,11 +51,52 @@
 }
   
 .userGreeting {
-    color: #007bff; /* Change to your desired color */
+    color: #007bff;
     font-weight: bold;
     text-transform: capitalize;
 }
 
 .product {
     margin-bottom: 20px;
+}
+
+.imageContainer {
+    margin-right: 50px;
+}
+
+@media (max-width: 650px) {
+    .accountData {
+        width: 80%;
+        height: 80px;
+        padding-top: 0px;
+        padding-bottom: 15px;
+    }
+
+    .accountData h3 {
+        font-size: 18px;
+    }
+
+    .accountManipulatebuttonsContainer {
+        display: block;
+        padding: 40px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .accountManipulatebuttons {
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 80%;
+        padding: 10px;
+        white-space: nowrap;
+    }
+
+    .productsHeader {
+        margin-top: 10px;
+    }
+
+    .imageContainer {
+        margin: 0 auto;
+        text-align: center;
+    }
 }

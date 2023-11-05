@@ -28,6 +28,114 @@
     border-radius: 4px;
 }
 
+@media (max-width: 650px) {
+    .h1Header {
+        font-size: 30px;
+    }
+
+    .productsFilterButtons {
+        width: 90%;
+        padding: 2px 5px;
+    }
+
+    .products {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    .product {
+        margin: 0 auto;
+        padding: 4px;
+        background-color: #F0F0F0;
+        width: 80%;
+        height: auto;
+    }
+    
+    .title {
+        font-weight: bold;
+        font-size: 20px;
+        text-decoration: underline;
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
+    
+    .title:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+        width: auto;
+        max-width: 100%;
+    }
+    
+    .information {
+        text-align: left;
+        margin-left: 30px;
+        margin-bottom: 8px;
+    }
+    
+    .imageContainer {
+        margin: 0 auto;
+    }
+    
+    .favoriteButton {
+        text-align: left;
+        margin-top: 5px;
+        margin-left: 9%;
+        margin-bottom: 20px;
+    }
+    
+    .favoriteButton button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        width: 150px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .favoriteButton button:hover {
+        background-color: #2373a1;
+    }
+    
+    .favoriteButton button.favorited {
+        background-color: #e74c3c;
+    }
+    
+    .favoriteButton button.favorited:hover {
+        background-color: #c0392b;
+    }
+    
+    .ownProductMessage {
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        background-color: #F0F0F0;
+        border-radius: 5px;
+        width: 82%;
+        height: 26px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .productsNotFound {
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 70px;
+        margin-bottom: 400px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        color: #333;
+        font-size: 18px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        width: 80%;
+    }
+}
+
 .productsFilterButtons button {
     background-color: #5dabff;
     color: #fff;
@@ -42,102 +150,104 @@
     background-color: #2890ff;
 }
 
-.products {
-    margin-top: 50px;
-    margin-bottom: 40px;
-}
+@media (min-width: 650px) {
+    .products {
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
 
-.product {
-    margin: 0 auto;
-    background-color: #F0F0F0;
-    width: 600px;
-    height: 150px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .product {
+        margin: 0 auto;
+        background-color: #F0F0F0;
+        width: 600px;
+        height: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.title {
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 5px;
-    text-decoration: underline;
-    display: inline-block;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 300px;
-}
+    .title {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 5px;
+        text-decoration: underline;
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
 
-.title:hover {
-    background-color: #ffffff;
-    cursor: pointer;
-    width: auto;
-    max-width: 300px;
-}
+    .title:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+        width: auto;
+        max-width: 300px;
+    }
 
-.information {
-    text-align: left;
-    margin-left: 40px;
-}
+    .information {
+        text-align: left;
+        margin-left: 40px;
+    }
 
-.imageContainer {
-    display: flex;
-    align-items: center;
-    margin-right: 50px;
-}
+    .imageContainer {
+        display: flex;
+        align-items: center;
+        margin-right: 50px;
+    }
 
-.favoriteButton {
-    margin-top: 5px;
-    margin-right: 450px;
-    margin-bottom: 20px;
-}
+    .favoriteButton {
+        margin-top: 5px;
+        margin-right: 450px;
+        margin-bottom: 20px;
+    }
 
-.favoriteButton button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    width: 150px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    .favoriteButton button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        width: 150px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-.favoriteButton button:hover {
-    background-color: #2373a1;
-}
+    .favoriteButton button:hover {
+        background-color: #2373a1;
+    }
 
-.favoriteButton button.favorited {
-    background-color: #e74c3c;
-}
+    .favoriteButton button.favorited {
+        background-color: #e74c3c;
+    }
 
-.favoriteButton button.favorited:hover {
-    background-color: #c0392b;
-}
+    .favoriteButton button.favorited:hover {
+        background-color: #c0392b;
+    }
 
-.ownProductMessage {
-    margin: 0 auto;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    background-color: #F0F0F0;
-    border-radius: 5px;
-    width: 600px;
-    height: 26px;
-    font-size: 16px;
-    font-weight: bold;
-}
+    .ownProductMessage {
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        background-color: #F0F0F0;
+        border-radius: 5px;
+        width: 600px;
+        height: 26px;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-.productsNotFound {
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 70px;
-    margin-bottom: 400px;
-    padding: 20px;
-    background-color: #f7f7f7;
-    color: #333;
-    font-size: 18px;
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    width: 600px;
+    .productsNotFound {
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 70px;
+        margin-bottom: 400px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        color: #333;
+        font-size: 18px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        width: 40%;
+    }
 }

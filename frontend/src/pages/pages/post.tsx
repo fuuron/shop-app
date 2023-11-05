@@ -98,15 +98,26 @@ const Post = () => {
               {errorResponseData.detail}
             </div>
           )}
-
+          
           <div className={styles.formOtherTitle}>商品写真</div>
-          <input type="file" {...register('photo')} accept="image/*" />
+          <div>
+            <label htmlFor='fileInput' className='custom-file-upload'>
+              <input
+                type='file' {...register('photo', { required: true })}
+                id='fileInput'
+                style={{ display: 'none' }}
+                accept='image/*'
+              />
+              <div className={styles.selectFile}>ファイルを選択</div>
+            </label>
+          </div>
+          {errors.photo && <div className={styles.emptyErrorMessage}>写真を選択してください</div>}
           {errorResponseData && (
             <div className={styles.serverErrorMessage}>
               {errorResponseData.photo}
             </div>
           )}
-
+          
         </div>
         <button className={styles.submit} type='submit'>商品投稿</button>
       </form>
