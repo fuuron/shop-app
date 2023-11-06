@@ -97,6 +97,7 @@ class PurchaseController extends Controller
             return [
                 'buyer_user_name' => $userPurchasedHistory->buyer->name,
                 'seller_user_name' => $userPurchasedHistory->seller->name,
+                'seller_user_email' => $userPurchasedHistory->seller->email,
                 'product' => $userPurchasedHistory->product,
                 'address' => $userPurchasedHistory->address,
                 'created_at' => $userPurchasedHistory->created_at
@@ -116,6 +117,7 @@ class PurchaseController extends Controller
         $userSelledHistoriesInfo = $userSelledHistories->map(function ($userSelledHistory) {
             return [
                 'buyer_user_name' => $userSelledHistory->buyer->name,
+                'buyer_user_email' => $userSelledHistory->buyer->email,
                 'seller_user_name' => $userSelledHistory->seller->name,
                 'product' => $userSelledHistory->product,
                 'address' => $userSelledHistory->address,

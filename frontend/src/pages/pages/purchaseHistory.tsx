@@ -41,13 +41,14 @@ const PurchaseHistory = () => {
     return (
       <div className={styles.container}>
         <h1>購入履歴</h1>
-        {data.userPurchasedHistories.map((userPurchasedHistory) => (
+        {data.userPurchasedHistories.slice().reverse().map((userPurchasedHistory) => (
           <div key={userPurchasedHistory.id} className={styles.purchaseHistory}>
             <div className={styles.productInformation}>
               <div onClick={() => handleShowDetail(userPurchasedHistory.product.id)}>
                 商品：<span className={styles.productTitle}>{userPurchasedHistory.product.title}</span>
               </div>
               <div>購入先：{userPurchasedHistory.seller_user_name}様</div>
+              <div>連絡先：{userPurchasedHistory.seller_user_email}</div>
               <div>購入日時：{new Date(userPurchasedHistory.created_at).toLocaleString()}</div>
             </div>
             <div className={styles.address}>
