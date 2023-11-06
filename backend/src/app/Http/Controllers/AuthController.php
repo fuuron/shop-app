@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -84,11 +86,43 @@ class AuthController extends Controller
     public function destroy(Request $request)
     {
         $user = Auth::user();
-        $user->delete();
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json(true);
+        
+        $purchaseHistories = Purchase::where(function ($query) use ($user) {
+            $query->where('seller_user_id', $user->id)
+                  ->orWhere('buyer_user_id', $user->id);
+        })->get();
+
+        if ($purchaseHistories->isNotEmpty()) {
+            DB::beginTransaction();
+
+            try {
+                foreach ($purchaseHistories as $purchaseHistory) {
+                    $purchaseHistory->delete();
+                    $product = $purchaseHistory->product;
+                    $product->delete();
+                }
+                $user->delete();
+
+                DB::commit();
+
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return response()->json(true);
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'error' => 'エラーが発生しました'
+                ], 500);
+            }
+        } else {
+            $user->delete();
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return response()->json(true);
+        }
     }
 
     public function edit(Request $request)

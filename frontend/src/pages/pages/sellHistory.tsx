@@ -47,7 +47,7 @@ const SellHistory = () => {
               <div onClick={() => handleShowDetail(userSelledHistory.product.id)}>
                 商品：<span className={styles.productTitle}>{userSelledHistory.product.title}</span>
               </div>
-              <div>販売先：{userSelledHistory.seller_user_name}様</div>
+              <div>販売先：{userSelledHistory.buyer_user_name}様</div>
               <div>販売日時：{new Date(userSelledHistory.created_at).toLocaleString()}</div>
             </div>
             <div className={styles.address}>

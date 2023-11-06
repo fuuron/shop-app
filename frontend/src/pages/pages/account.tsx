@@ -33,6 +33,11 @@ const AcccountPage = () => {
       console.log(res);
       location.href = 'http://localhost:3000/pages/register';
     })
+    .catch((error) => {
+      console.log(error);
+      alert('エラーが発生しました');
+      location.href = 'http://localhost:3000/pages/account';
+    })
   }
 
   const editRouter = () => {
