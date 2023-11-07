@@ -29,8 +29,8 @@ const Post = () => {
     formData.append('type', data.type);
     formData.append('detail', data.detail);
     formData.append('photo', data.photo[0]);
-    console.log(formData);
-    console.log(data);
+    // console.log(formData);
+    // console.log(data);
 
     try {
       await http.get('/sanctum/csrf-cookie');
@@ -40,16 +40,16 @@ const Post = () => {
         }
       })
       const responseData = response.data;
-      console.log(responseData);
+      // console.log(responseData);
       
       if (responseData.productsPageUrl) {
         router.push(responseData.productsPageUrl);
       }
       
     } catch (error) {
-      console.error('エラーが発生しました:', error);
+      // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
-      console.error('エラーレスポンス:', errorResponseData);
+      // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }

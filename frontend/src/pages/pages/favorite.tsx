@@ -19,7 +19,7 @@ const Favorite = () => {
     }
   )
 
-  console.log(data);
+  // console.log(data);
 
   const handleShowDetail = (productId) => {
     router.push(`http://localhost:3000/pages/product/${productId}`);
@@ -51,7 +51,7 @@ const Favorite = () => {
         }));
       }
     } catch (error) {
-      console.error('Failed to add favorite:', error);
+      // console.error('Failed to add favorite:', error);
     }
   }
 
@@ -62,14 +62,14 @@ const Favorite = () => {
   
       if (response.data) {
         setFavoriteProducts(favoriteProducts.filter((id) => id !== productId));
-        console.log(response.data);
+        // console.log(response.data);
         setFavoriteCounts((prevCounts) => ({
           ...prevCounts,
           [productId]: (prevCounts[productId] || 0) - 1,
         }));
       }
     } catch (error) {
-      console.error('Failed to remove favorite:', error);
+      // console.error('Failed to remove favorite:', error);
     }
   }
 

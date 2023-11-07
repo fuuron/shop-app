@@ -21,7 +21,7 @@ const Purchase = () => {
     }
   )
 
-  console.log(data);
+  // console.log(data);
 
   const handleShowDetail = (productId) => {
     router.push(`http://localhost:3000/pages/product/${productId}`);
@@ -37,11 +37,12 @@ const Purchase = () => {
       try {
         await http.get('/sanctum/csrf-cookie');
         const response = await http.post('/api/purchase', data);
-        const responseData = response.data;
-        console.log(responseData);
-        router.push('http://localhost:3000/pages/purchaseHistory');
+        // console.log(responseData);
+        if (response) {
+          router.push('http://localhost:3000/pages/purchaseHistory');
+        }
       } catch (error) {
-        console.error('エラーが発生しました:', error);
+        // console.error('エラーが発生しました:', error);
         const errorResponseData = error.response.data.errors;
         if (errorResponseData) {
           setErrorResponseData(errorResponseData);
