@@ -1,4 +1,5 @@
 import styles from '../../styles/purchaseHistory.module.css'
+import React from 'react'
 import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
@@ -41,25 +42,27 @@ const PurchaseHistory = () => {
     return (
       <div className={styles.container}>
         <h1>購入履歴</h1>
-        {data.userPurchasedHistories.slice().reverse().map((userPurchasedHistory) => (
-          <div key={userPurchasedHistory.id} className={styles.purchaseHistory}>
-            <div className={styles.productInformation}>
-              <div onClick={() => handleShowDetail(userPurchasedHistory.product.id)}>
-                商品：<span className={styles.productTitle}>{userPurchasedHistory.product.title}</span>
+        {data.userPurchasedHistories.slice().reverse().map((userPurchasedHistory, index) => (
+          <React.Fragment key={index}>
+            <div className={styles.purchaseHistory}>
+              <div className={styles.productInformation}>
+                <div onClick={() => handleShowDetail(userPurchasedHistory.product.id)}>
+                  商品：<span className={styles.productTitle}>{userPurchasedHistory.product.title}</span>
+                </div>
+                <div>購入先：{userPurchasedHistory.seller_user_name}様</div>
+                <div>連絡先：{userPurchasedHistory.seller_user_email}</div>
+                <div>購入日時：{new Date(userPurchasedHistory.created_at).toLocaleString()}</div>
               </div>
-              <div>購入先：{userPurchasedHistory.seller_user_name}様</div>
-              <div>連絡先：{userPurchasedHistory.seller_user_email}</div>
-              <div>購入日時：{new Date(userPurchasedHistory.created_at).toLocaleString()}</div>
-            </div>
-            <div className={styles.address}>
-              <div className={styles.receiveAddress}>受け取り住所</div>
-              <div>
-                <div>受取先：{userPurchasedHistory.address.block_number} {userPurchasedHistory.address.prefecture}</div>
-                <div>市区町村：{userPurchasedHistory.address.municipality} 番地：{userPurchasedHistory.address.postal_code}</div>
-                <div>建物名・部屋番号：{userPurchasedHistory.address.building_and_room}</div>
+              <div className={styles.address}>
+                <div className={styles.receiveAddress}>受け取り住所</div>
+                <div>
+                  <div>受取先：{userPurchasedHistory.address.block_number} {userPurchasedHistory.address.prefecture}</div>
+                  <div>市区町村：{userPurchasedHistory.address.municipality} 番地：{userPurchasedHistory.address.postal_code}</div>
+                  <div>建物名・部屋番号：{userPurchasedHistory.address.building_and_room}</div>
+                </div>
               </div>
             </div>
-          </div>
+          </React.Fragment>
         ))}
       </div>
     )
