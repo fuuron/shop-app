@@ -99,11 +99,11 @@ const ProductDetail = () => {
           <div>
             <div className={styles.doComments}>＜コメントする＞</div>
             <input className={styles.commentsInput} {...register('text', { required: true })} />
-            {errors.text && <div>テキストを入力してください</div>}
+            {errors.text && <div className={styles.commentErrorMessage}>テキストを入力してください</div>}
           </div>
 
           {errorResponseData && (
-            <div className='error-message'>
+            <div className={styles.commentErrorMessage}>
               {errorResponseData.text}
             </div>
           )}

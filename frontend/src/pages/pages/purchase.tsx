@@ -84,7 +84,7 @@ const Purchase = () => {
         <form className={styles2.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.addressFormTitle}>お届け先を入力してください</div>
           <div className={styles2.formContent}>
-            <div className={styles2.formTitle}>郵便番号</div>
+            <div className={styles2.formTitle}>郵便番号 (数字のみ)</div>
             <input className={styles2.input} type='text' {...register('postal_code', { required: true })} />
             {errors.postal_code && <div className={styles2.emptyErrorMessage}>郵便番号を入力してください</div>}
             {errorResponseData && (

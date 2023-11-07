@@ -8,6 +8,7 @@ use App\Models\Favorite;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\MyValidationRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str; 
@@ -17,19 +18,14 @@ class ProductController extends Controller
 {
     public function post(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:20',
-            'type' => 'required|string',
-            'detail' => 'required|string|max:100',
-            'photo' => 'required|image'
-        ], [
-            'title.max' => 'タイトルは20文字以内にしてください',
-            'detail.max' => '説明は100文字以内にしてください',
-            'photo' => '写真をアップロードしてください'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            MyValidationRequest::createProductRules(),
+            MyValidationRequest::createProductMessages()
+        );
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => $validator->errors()], 422);
         } else {
             if ($request->hasFile('photo')) {
                 $image = $request->file('photo');

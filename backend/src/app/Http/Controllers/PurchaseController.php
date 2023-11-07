@@ -8,6 +8,7 @@ use App\Models\Favorite;
 use App\Models\Address;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\MyValidationRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,22 +33,14 @@ class PurchaseController extends Controller
 
     public function purchase(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'postal_code' => 'required|numeric|max:9999999',
-            'prefecture' => 'required|string',
-            'municipality' => 'required|string|max:30',
-            'block_number' => 'required|max:10',
-            'building_and_room' => 'required|max:30'
-        ], [
-            'postal_code.numeric' => '郵便番号は数字で入力してください',
-            'postal_code.max' => '郵便番号は数字のみで7桁まで入力してください',
-            'municipality.max' => '30文字以内にしてください',
-            'block_number.max' => '正しい番地を入力してください',
-            'building_and_room.max' => '30文字以内で入力してください'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            MyValidationRequest::createPurchaseRules(),
+            MyValidationRequest::createPurchaseMessages()
+        );
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => $validator->errors()], 422);
         } else {
             $userId = Auth::user()->id;
 
