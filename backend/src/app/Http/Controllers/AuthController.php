@@ -22,7 +22,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => 'そのemailは使用できません'], 422);
         } else {
-            $user = User::create([
+            User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
@@ -133,7 +133,7 @@ class AuthController extends Controller
         if ($request->has('email') && $request->email != Auth::user()->email) {
             $rules['email'][] = 'unique:users,email';
         }
-        
+
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
