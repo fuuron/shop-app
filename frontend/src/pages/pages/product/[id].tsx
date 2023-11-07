@@ -24,13 +24,15 @@ const ProductDetail = () => {
     }
   )
 
-  console.log(data);
-
   const handleDestroy = () => {
-    http.post(`/api/productDestroy/${productId}`).then((res) => {
-      console.log(res);
-      location.href = 'http://localhost:3000/pages/products';
-    })
+    const isConfirmed = window.confirm('本当に削除しますか？');
+
+    if (isConfirmed) {
+      http.delete(`/api/product/${productId}`).then((res) => {
+        console.log(res);
+        location.href = 'http://localhost:3000/pages/products';
+      })
+    }
   }
 
   const onSubmit = async (data) => {
@@ -97,11 +99,11 @@ const ProductDetail = () => {
           <div>
             <div className={styles.doComments}>＜コメントする＞</div>
             <input className={styles.commentsInput} {...register('text', { required: true })} />
-            {errors.text && <div>テキストを入力してください</div>}
+            {errors.text && <div className={styles.commentErrorMessage}>テキストを入力してください</div>}
           </div>
 
           {errorResponseData && (
-            <div className='error-message'>
+            <div className={styles.commentErrorMessage}>
               {errorResponseData.text}
             </div>
           )}

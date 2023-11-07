@@ -4,24 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\MyValidationRequest;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required']
-        ]);
+        $validator = Validator::make($request->all(), MyValidationRequest::createRegisterRules());
 
         if ($validator->fails()) {
-            return response()->json(['errors' => 'そのemailは使用できません'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => 'そのemailは使用できません'], 422);
         } else {
             $user = User::create([
                 'name' => $request->name,
@@ -44,7 +43,7 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $token,
                 'accountPageUrl' => '/pages/account'
-            ], Response::HTTP_OK);
+            ], 200);
         }
         return response()->json('emailまたはパスワードが間違っています', 500);
     }
@@ -84,11 +83,43 @@ class AuthController extends Controller
     public function destroy(Request $request)
     {
         $user = Auth::user();
-        $user->delete();
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json(true);
+        
+        $purchaseHistories = Purchase::where(function ($query) use ($user) {
+            $query->where('seller_user_id', $user->id)
+                  ->orWhere('buyer_user_id', $user->id);
+        })->get();
+
+        if ($purchaseHistories->isNotEmpty()) {
+            DB::beginTransaction();
+
+            try {
+                foreach ($purchaseHistories as $purchaseHistory) {
+                    $purchaseHistory->delete();
+                    $product = $purchaseHistory->product;
+                    $product->delete();
+                }
+                $user->delete();
+
+                DB::commit();
+
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return response()->json(true);
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                return response()->json([
+                    'error' => 'エラーが発生しました'
+                ], 500);
+            }
+        } else {
+            $user->delete();
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return response()->json(true);
+        }
     }
 
     public function edit(Request $request)
@@ -106,7 +137,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => 'そのemailは使用できません'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => 'そのemailは使用できません'], 422);
         } else {
             $user = Auth::user();
             $user->name = $request->name;

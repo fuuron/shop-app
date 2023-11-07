@@ -19,13 +19,15 @@ const Edit = () => {
     }
   )
 
+  console.log(data);
+
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
     try {
       await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/edit', data);
+      const response = await http.put('/api/edit', data);
       const responseData = response.data;
       console.log(responseData);
       
@@ -65,11 +67,21 @@ const Edit = () => {
 
         <div className={styles.formContent}>
           <div className={styles.formTitle}>ユーザー名</div>
-          <input className={styles.input} type='name' {...register('name', { required: true })} />
+          <input 
+            className={styles.input}
+            type='name'
+            {...register('name', { required: true })}
+            value={data.name}
+          />
           {errors.name && <div className={styles.emptyErrorMessage}>ユーザー名を入力してください</div>}
 
           <div className={styles.formOtherTitle}>email</div>
-          <input className={styles.input} type='email' {...register('email', { required: true })} />
+          <input 
+            className={styles.input}
+            type='email'
+            {...register('email', { required: true })}
+            value={data.email}
+          />
           {errors.email && <div className={styles.emptyErrorMessage}>emailを入力してください</div>}
 
           <div className={styles.formOtherTitle}>パスワード</div>

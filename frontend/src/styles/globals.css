@@ -115,6 +115,10 @@ li {
   transition: .2s;
 }
 
+#hmb:hover {
+  background-color: #b1b1b1;
+}
+
 #hmb span:first-child {top: 0;}
 #hmb span:nth-child(2) {top: 12px;}
 #hmb span:last-child {top: 24px;}
@@ -159,6 +163,10 @@ nav ul li::after {
   width: 100%;
   height: 1px;
   background-color: #ffffff;
+}
+
+nav ul li:hover {
+  background-color: #b1b1b1;
 }
 
 /* アクティブ */
