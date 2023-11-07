@@ -19,7 +19,7 @@ const Edit = () => {
     }
   )
 
-  console.log(data);
+  // console.log(data);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
@@ -29,16 +29,16 @@ const Edit = () => {
       await http.get('/sanctum/csrf-cookie');
       const response = await http.put('/api/edit', data);
       const responseData = response.data;
-      console.log(responseData);
+      // console.log(responseData);
       
       if (responseData.LoginPageUrl) {
         location.href = responseData.LoginPageUrl;
       }
       
     } catch (error) {
-      console.error('エラーが発生しました:', error);
+      // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
-      console.error('エラーレスポンス:', errorResponseData);
+      // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }

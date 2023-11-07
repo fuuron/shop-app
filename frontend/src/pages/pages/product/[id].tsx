@@ -29,7 +29,7 @@ const ProductDetail = () => {
 
     if (isConfirmed) {
       http.delete(`/api/product/${productId}`).then((res) => {
-        console.log(res);
+        // console.log(res);
         location.href = 'http://localhost:3000/pages/products';
       })
     }
@@ -40,16 +40,16 @@ const ProductDetail = () => {
       await http.get('/sanctum/csrf-cookie');
       const response = await http.post(`/api/commentPost/${productId}`, data);
       const responseData = response.data;
-      console.log(responseData);
+      // console.log(responseData);
       
       if (responseData.showDetailPageUrl) {
         location.href = responseData.showDetailPageUrl;
       }
       
     } catch (error) {
-      console.error('エラーが発生しました:', error);
+      // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
-      console.error('エラーレスポンス:', errorResponseData);
+      // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }

@@ -19,11 +19,11 @@ const AcccountPage = () => {
     }
   )
 
-  console.log(data);
+  // console.log(data);
 
   const handleLogout = () => {
     http.post('/api/logout').then((res) => {
-      console.log(res);
+      // console.log(res);
       location.href = 'http://localhost:3000/pages/login';
     })
   }
@@ -33,11 +33,11 @@ const AcccountPage = () => {
     
     if (isConfirmed) {
       http.delete('/api/destroy').then((res) => {
-        console.log(res);
+        // console.log(res);
         location.href = 'http://localhost:3000/pages/register';
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         alert('エラーが発生しました');
         location.href = 'http://localhost:3000/pages/account';
       })

@@ -19,7 +19,7 @@ const SellHistory = () => {
     }
   )
 
-  console.log(data);
+  // console.log(data);
 
   const handleShowDetail = (productId) => {
     router.push(`http://localhost:3000/pages/product/${productId}`);
