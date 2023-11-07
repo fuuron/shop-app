@@ -179,6 +179,7 @@
         background-color: #F0F0F0;
         width: 600px;
         height: 600px;
+        position: relative;
     }
 
     .information {
@@ -196,10 +197,10 @@
 
     .imageContainer {
         position: absolute;
-        top: 490px;
+        margin-bottom: 20px;
         bottom: 0;
-        left: 0;
         right: 0;
+        left: 0;
     }
 
     .postDelate {
