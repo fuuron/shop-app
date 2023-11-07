@@ -24,13 +24,15 @@ const ProductDetail = () => {
     }
   )
 
-  console.log(data);
-
   const handleDestroy = () => {
-    http.delete(`/api/product/${productId}`).then((res) => {
-      console.log(res);
-      location.href = 'http://localhost:3000/pages/products';
-    })
+    const isConfirmed = window.confirm('本当に削除しますか？');
+
+    if (isConfirmed) {
+      http.delete(`/api/product/${productId}`).then((res) => {
+        console.log(res);
+        location.href = 'http://localhost:3000/pages/products';
+      })
+    }
   }
 
   const onSubmit = async (data) => {

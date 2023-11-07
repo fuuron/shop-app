@@ -31,20 +31,24 @@ const Purchase = () => {
   const [errorResponseData, setErrorResponseData] = useState(null);
 
   const onSubmit = async (data) => {
-    try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/purchase', data);
-      const responseData = response.data;
-      console.log(responseData);
-      router.push('http://localhost:3000/pages/purchaseHistory');
-    } catch (error) {
-      console.error('エラーが発生しました:', error);
-      const errorResponseData = error.response.data.errors;
-      if (errorResponseData) {
-        setErrorResponseData(errorResponseData);
-      } else {
-        alert('購入できませんでした。再度読み込んでください。');
-        router.push('http://localhost:3000/pages/products');
+    const isConfirmed = window.confirm('商品を購入します。よろしいですか？');
+
+    if (isConfirmed) {
+      try {
+        await http.get('/sanctum/csrf-cookie');
+        const response = await http.post('/api/purchase', data);
+        const responseData = response.data;
+        console.log(responseData);
+        router.push('http://localhost:3000/pages/purchaseHistory');
+      } catch (error) {
+        console.error('エラーが発生しました:', error);
+        const errorResponseData = error.response.data.errors;
+        if (errorResponseData) {
+          setErrorResponseData(errorResponseData);
+        } else {
+          alert('購入できませんでした。再度読み込んでください。');
+          router.push('http://localhost:3000/pages/products');
+        }
       }
     }
   }

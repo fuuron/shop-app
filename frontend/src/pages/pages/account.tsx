@@ -29,15 +29,19 @@ const AcccountPage = () => {
   }
 
   const handleDestroy = () => {
-    http.delete('/api/destroy').then((res) => {
-      console.log(res);
-      location.href = 'http://localhost:3000/pages/register';
-    })
-    .catch((error) => {
-      console.log(error);
-      alert('エラーが発生しました');
-      location.href = 'http://localhost:3000/pages/account';
-    })
+    const isConfirmed = window.confirm('これまでの取引内容、および投稿した商品は失われます。本当に削除しますか？');
+    
+    if (isConfirmed) {
+      http.delete('/api/destroy').then((res) => {
+        console.log(res);
+        location.href = 'http://localhost:3000/pages/register';
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('エラーが発生しました');
+        location.href = 'http://localhost:3000/pages/account';
+      })
+    }
   }
 
   const editRouter = () => {
