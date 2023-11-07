@@ -29,7 +29,7 @@ const AcccountPage = () => {
   }
 
   const handleDestroy = () => {
-    http.post('/api/destroy').then((res) => {
+    http.delete('/api/destroy').then((res) => {
       console.log(res);
       location.href = 'http://localhost:3000/pages/register';
     })

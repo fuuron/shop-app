@@ -27,7 +27,7 @@ const ProductDetail = () => {
   console.log(data);
 
   const handleDestroy = () => {
-    http.post(`/api/productDestroy/${productId}`).then((res) => {
+    http.delete(`/api/product/${productId}`).then((res) => {
       console.log(res);
       location.href = 'http://localhost:3000/pages/products';
     })
