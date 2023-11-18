@@ -1,77 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import Header from './header'; // Headerコンポーネントをインポート
+import React, { useState, ReactNode } from 'react'
+import axios from 'axios'
+import useSWR from 'swr'
 
-const Layout = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+interface LayoutProps {
+  children: ReactNode;
+}
 
-  // useEffect(() => {
-  //   // console.log('useEffect is running');
-  //   fetch('http://localhost:8080/api/user')
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       // 取得したデータからログイン状態をセット
-  //       setLoggedIn(data.loggedIn);
+const http = axios.create({
+  baseURL: 'http://localhost',
+  withCredentials: true
+})
 
-  //       console.log('loggedIn:', data.loggedIn);
+const Layout: React.FC<LayoutProps> = ({ children }) => {
 
-  //       // ログイン状態が false の場合もログに表示
-  //       if (!data.loggedIn) {
-  //         console.log('User is not logged in.');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error('エラー:', error);
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    // ここでアクセストークンを取得
-    const accessTokenDataString = localStorage.getItem('token'); // ローカルストレージからアクセストークンを取得
-    const accessToken = JSON.parse(accessTokenDataString);
-    console.log(accessToken);
-    // アクセストークンが存在する場合にAPIリクエストを行う
-    if (accessToken) {
-      const accessTokenString = accessToken.access_token;
-      fetch('http://localhost/api/user',
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${accessTokenString}`, // アクセストークンをBearerトークンとして含める
-            'Content-Type': 'application/json'
-          },
-        }
-      )
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // APIからのレスポンスを処理
-        console.log(data);
-
-        // ログイン状態を更新
-        setLoggedIn(true);
-      })
-      .catch(error => {
-        console.error('エラー:', error);
-      });
+  const { data: user, error, isLoading } = useSWR('http://localhost/api/user', () =>
+    http.get('http://localhost/api/user').then((res) => res.data),
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false
     }
-  }, []);
+  )
 
-  return (
-    <div>
-      <Header loggedIn={loggedIn} /> {/* Headerコンポーネントを呼び出す */}
-      <main>{children}</main>
-      <footer>Footer content</footer>
-    </div>
-  );
-};
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleHeader = () => {
+    setIsActive(!isActive);
+  };
+
+  if (isLoading) {
+    return (
+      <>
+      </>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>
+        <header className='unauthorizedHeader'>
+          <h1 className='title'><a href='/pages/login'>めだか屋</a></h1>
+          <nav className='unauthorizednav'>
+            <ul className='unauthorizedMenu-group'>
+              <div className='menu-item'><a href='/pages/login'>ログイン</a></div>
+              <div className='menu-item'><a href='/pages/register'>新規登録</a></div>
+            </ul>
+          </nav>
+        </header>
+        <main className='main'>{children}</main>
+      </div>
+    )
+  }
+
+  if (user) {
+    return (
+      <div className='htmlHeader'>
+        <header id="header" className={isActive ? 'active' : ''}>
+          <a href='/pages/products' className='logo'>めだか屋</a>
+          <div id='hmb' onClick={toggleHeader}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <nav className='menu-group'>
+            <ul>
+              <li><a href='/pages/products'>商品一覧</a></li>
+              <li><a href='/pages/post'>商品投稿</a></li>
+              <li><a href='/pages/favorite'>気になる一覧</a></li>
+              <li><a href='/pages/purchaseHistory'>購入履歴</a></li>
+              <li><a href='/pages/sellHistory'>販売履歴</a></li>
+              <li><a href='/pages/account'>{user.name} さん</a></li>
+            </ul>
+          </nav>
+        </header>
+        <main>{children}</main>
+      </div>
+    )
+  }
+}
 
 export default Layout;

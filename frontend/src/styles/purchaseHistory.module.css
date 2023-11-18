@@ -1,0 +1,75 @@
+.container {
+    text-align: center;
+}
+
+.purchaseHistory {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #F0F0F0;
+    width: 500px;
+}
+
+.productInformation {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 450px;
+}
+
+.productTitle {
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.productTitle:hover {
+    color: #8f8f8f;
+    cursor: pointer;
+}
+
+.address {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px; 
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 450px;
+}
+
+.receiveAddress {
+    font-weight: bold;
+    border-bottom: 1px solid #8f8f8f;
+}
+
+.purchasesNotFound {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 70px;
+    margin-bottom: 400px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    color: #333;
+    font-size: 18px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 40%;
+}
+
+@media (max-width: 650px) {
+    .purchaseHistory {
+        width: 80%;
+    }
+
+    .productInformation {
+        width: 80%;
+    }
+
+    .address {
+        width: 80%;
+    }
+
+    .purchasesNotFound {
+        width: 80%;
+    }
+}
