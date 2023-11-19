@@ -122,7 +122,9 @@ const Products = () => {
                   <div>投稿日時: {new Date(product.updated_at).toLocaleString()}</div>
                 </div>
                 <div className={styles.imageContainer}>
-                  <img src={product.photo} width="200" height="auto" alt={product.title} />
+                  <picture>
+                    <img src={product.photo} width="200" height="auto" alt={product.title} />
+                  </picture>
                 </div>
               </div>
 

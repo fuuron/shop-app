@@ -78,7 +78,9 @@ const ProductDetail = () => {
             <p className={styles.breakWords}>詳細: {data.product.detail}</p>
           </div>
           <div className={styles.imageContainer}>
-            <img src={data.product.photo} width="400" height="auto" alt={data.product.title} />
+            <picture>
+              <img src={data.product.photo} width="400" height="auto" alt={data.product.title} />
+            </picture>
           </div>
         </div>
         
