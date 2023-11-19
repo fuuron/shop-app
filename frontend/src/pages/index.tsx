@@ -25,11 +25,11 @@ const Index = () => {
     }
 
     if (data) {
-        router.push('http://localhost:3000/pages/products');
+      location.href = 'http://localhost:3000/pages/products';
     }
   
     if (error) {
-        router.push('http://localhost:3000/pages/login');
+      location.href = 'http://localhost:3000/pages/login';
     }
 }
 
