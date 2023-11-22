@@ -5,7 +5,7 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `'http://localhost'`,
   withCredentials: true
 })
 

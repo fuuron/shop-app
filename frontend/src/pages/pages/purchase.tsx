@@ -7,14 +7,14 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create ({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Purchase = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/checkoutPage', () =>
-    http.get('http://localhost/api/checkoutPage').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/checkoutPage`, () =>
+    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/checkoutPage`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -24,7 +24,7 @@ const Purchase = () => {
   // console.log(data);
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -39,7 +39,7 @@ const Purchase = () => {
         const response = await http.post('/api/purchase', data);
         // console.log(responseData);
         if (response) {
-          router.push('http://localhost:3000/pages/purchaseHistory');
+          router.push('/pages/purchaseHistory');
         }
       } catch (error) {
         // console.error('エラーが発生しました:', error);
@@ -48,7 +48,7 @@ const Purchase = () => {
           setErrorResponseData(errorResponseData);
         } else {
           alert('購入できませんでした。再度読み込んでください。');
-          router.push('http://localhost:3000/pages/products');
+          router.push('/pages/products');
         }
       }
     }
@@ -64,7 +64,7 @@ const Purchase = () => {
   if (error) {
     const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/pages/login';
   }
 
   if (data.products && data.products.length > 0) {

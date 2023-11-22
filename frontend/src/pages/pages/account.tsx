@@ -5,14 +5,14 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const AcccountPage = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/userInformation', () =>
-  http.get('http://localhost/api/userInformation').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/userInformation`, () =>
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/userInformation`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -24,7 +24,7 @@ const AcccountPage = () => {
   const handleLogout = () => {
     http.post('/api/logout').then((res) => {
       // console.log(res);
-      location.href = 'http://localhost:3000/pages/login';
+      location.href = '/pages/login';
     })
   }
 
@@ -34,22 +34,22 @@ const AcccountPage = () => {
     if (isConfirmed) {
       http.delete('/api/destroy').then((res) => {
         // console.log(res);
-        location.href = 'http://localhost:3000/pages/register';
+        location.href = '/pages/register';
       })
       .catch((error) => {
         // console.log(error);
         alert('エラーが発生しました');
-        location.href = 'http://localhost:3000/pages/account';
+        location.href = '/pages/account';
       })
     }
   }
 
   const editRouter = () => {
-    router.push('http://localhost:3000/pages/edit');
+    router.push('/pages/edit');
   }
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   if (isLoading) {
@@ -62,7 +62,7 @@ const AcccountPage = () => {
   if (error) {
     const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/pages/login';
   }
 
   if (data) {

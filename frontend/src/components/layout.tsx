@@ -8,14 +8,14 @@ interface LayoutProps {
 }
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
-  const { data: user, error, isLoading } = useSWR('http://localhost/api/user', () =>
-    http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: user, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false

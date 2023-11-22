@@ -53,7 +53,7 @@ const Edit = () => {
   if (error) {
     const errorMessage = 'セッションが切れました。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/pages/login';
   }
 
   if (data) {

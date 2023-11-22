@@ -6,14 +6,14 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Register = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
-  http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -80,7 +80,7 @@ const Register = () => {
   if (data) {
     const errorMessage = '既にログインしています。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/account';
+    location.href = '/pages/account';
   }
 }
 

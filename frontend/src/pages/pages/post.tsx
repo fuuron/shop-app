@@ -6,14 +6,14 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Post = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
-  http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -64,7 +64,7 @@ const Post = () => {
   if (error) {
     const errorMessage = 'セッションが切れました。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/pages/login';
   }
 
   if (data) {

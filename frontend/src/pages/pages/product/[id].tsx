@@ -6,7 +6,7 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
@@ -16,8 +16,8 @@ const ProductDetail = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
-  const { data: data, error, isLoading } = useSWR(`http://localhost/api/showDetail/${productId}`, () =>
-    http.get(`http://localhost/api/showDetail/${productId}`).then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`, () =>
+    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -30,7 +30,7 @@ const ProductDetail = () => {
     if (isConfirmed) {
       http.delete(`/api/product/${productId}`).then((res) => {
         // console.log(res);
-        location.href = 'http://localhost:3000/pages/products';
+        location.href = '/pages/products';
       })
     }
   }
@@ -64,7 +64,7 @@ const ProductDetail = () => {
   if (error) {
     const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/pages/login';
   }
 
   if (data) {
