@@ -28,18 +28,18 @@ const Login = () => {
       http.get('/sanctum/csrf-cookie');
 
       const response = await http.post('/api/login', data);
-      console.log(response);
+      // console.log(response);
 
       const responseData = response.data;
-      console.log(responseData);
+      // console.log(responseData);
 
       if (responseData.accountPageUrl) {
-        router.push(responseData.accountPageUrl);
+        location.href = '/';
       }
     } catch (error) {
-      console.error('エラーが発生しました:', error);
+      // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data;
-      console.error('エラーレスポンス:', errorResponseData);
+      // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }

@@ -149,7 +149,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'ユーザー情報が編集されました',
-            'LoginPageUrl' => '/pages/account'
+            'accountPageUrl' => '/pages/account'
         ], 200);
     }
 }

@@ -24,7 +24,7 @@ const AcccountPage = () => {
   const handleLogout = () => {
     http.post('/api/logout').then((res) => {
       // console.log(res);
-      location.href = '/pages/login';
+      location.href = '/';
     })
   }
 
@@ -34,12 +34,12 @@ const AcccountPage = () => {
     if (isConfirmed) {
       http.delete('/api/destroy').then((res) => {
         // console.log(res);
-        location.href = '/pages/register';
+        location.href = '/';
       })
       .catch((error) => {
         // console.log(error);
         alert('エラーが発生しました');
-        location.href = '/pages/account';
+        location.href = '/';
       })
     }
   }

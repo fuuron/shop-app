@@ -5,14 +5,14 @@ import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: `'http://localhost'`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Products = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/products', () =>
-    http.get('http://localhost/api/products').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, () =>
+    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/products`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -22,7 +22,7 @@ const Products = () => {
   // console.log(data);
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);

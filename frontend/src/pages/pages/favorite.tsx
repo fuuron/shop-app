@@ -44,7 +44,7 @@ const Favorite = () => {
   
       if (response.data) {
         setFavoriteProducts([...favoriteProducts, productId]);
-        console.log(response.data);
+        // console.log(response.data);
         setFavoriteCounts((prevCounts) => ({
           ...prevCounts,
           [productId]: (prevCounts[productId] || 0) + 1,

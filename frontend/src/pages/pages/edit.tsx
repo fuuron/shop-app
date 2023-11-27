@@ -1,18 +1,19 @@
 import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
 
 const http = axios.create({
-  baseURL: 'http://localhost',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   withCredentials: true
 })
 
 const Edit = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
-  http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -31,8 +32,8 @@ const Edit = () => {
       const responseData = response.data;
       // console.log(responseData);
       
-      if (responseData.LoginPageUrl) {
-        location.href = responseData.LoginPageUrl;
+      if (responseData.accountPageUrl) {
+        location.href = '/';
       }
       
     } catch (error) {
@@ -71,7 +72,7 @@ const Edit = () => {
             className={styles.input}
             type='name'
             {...register('name', { required: true })}
-            value={data.name}
+            defaultValue={data.name}
           />
           {errors.name && <div className={styles.emptyErrorMessage}>ユーザー名を入力してください</div>}
 
@@ -80,7 +81,7 @@ const Edit = () => {
             className={styles.input}
             type='email'
             {...register('email', { required: true })}
-            value={data.email}
+            defaultValue={data.email}
           />
           {errors.email && <div className={styles.emptyErrorMessage}>emailを入力してください</div>}
 
