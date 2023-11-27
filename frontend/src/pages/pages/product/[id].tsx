@@ -30,7 +30,7 @@ const ProductDetail = () => {
     if (isConfirmed) {
       http.delete(`/api/product/${productId}`).then((res) => {
         // console.log(res);
-        location.href = '/pages/products';
+        location.href = '/';
       })
     }
   }
@@ -43,7 +43,8 @@ const ProductDetail = () => {
       // console.log(responseData);
       
       if (responseData.showDetailPageUrl) {
-        location.href = responseData.showDetailPageUrl;
+        location.href = '/';
+        // router.push(responseData.showDetailPageUrl);
       }
       
     } catch (error) {
@@ -64,7 +65,7 @@ const ProductDetail = () => {
   if (error) {
     const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    location.href = '/pages/login';
+    location.href = '/';
   }
 
   if (data) {

@@ -64,7 +64,7 @@ const Purchase = () => {
   if (error) {
     const errorMessage = 'セッションが切れています。再度ログインしてください。';
     alert(errorMessage);
-    location.href = '/pages/login';
+    location.href = '/';
   }
 
   if (data.products && data.products.length > 0) {

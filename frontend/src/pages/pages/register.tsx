@@ -28,16 +28,16 @@ const Register = () => {
       await http.get('/sanctum/csrf-cookie');
       const response = await http.post('/api/register', data);
       const responseData = response.data;
-      // console.log(responseData);
+      console.log(responseData);
       
       if (responseData.LoginPageUrl) {
         router.push(responseData.LoginPageUrl);
       }
       
     } catch (error) {
-      // console.error('エラーが発生しました:', error);
+      console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
-      // console.error('エラーレスポンス:', errorResponseData);
+      console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }
@@ -80,7 +80,7 @@ const Register = () => {
   if (data) {
     const errorMessage = '既にログインしています。';
     alert(errorMessage);
-    location.href = '/pages/account';
+    location.href = '/';
   }
 }
 

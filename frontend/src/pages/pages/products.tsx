@@ -97,7 +97,7 @@ const Products = () => {
   if (error) {
     const errorMessage = 'セッションが切れました。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/';
   }
 
   if (data.products && data.products.length > 0) {

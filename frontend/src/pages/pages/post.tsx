@@ -64,7 +64,7 @@ const Post = () => {
   if (error) {
     const errorMessage = 'セッションが切れました。再度ログインしてください。';
     alert(errorMessage);
-    location.href = '/pages/login';
+    location.href = '/';
   }
 
   if (data) {

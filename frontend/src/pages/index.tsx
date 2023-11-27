@@ -1,3 +1,4 @@
+import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
 
@@ -24,11 +25,11 @@ const Index = () => {
     }
 
     if (data) {
-      // location.href = '/pages/products';
+      router.push('pages/products');
     }
   
     if (error) {
-      // location.href = '/pages/login';
+      router.push('pages/login');
     }
 }
 

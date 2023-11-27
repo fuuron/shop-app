@@ -1,6 +1,7 @@
 import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import router from 'next/router'
 import axios from 'axios'
 import useSWR from 'swr'
 
@@ -27,18 +28,18 @@ const Login = () => {
       http.get('/sanctum/csrf-cookie');
 
       const response = await http.post('/api/login', data);
-      // console.log(response);
+      console.log(response);
 
       const responseData = response.data;
-      // console.log(responseData);
+      console.log(responseData);
 
       if (responseData.accountPageUrl) {
-        location.href = responseData.accountPageUrl;
+        router.push(responseData.accountPageUrl);
       }
     } catch (error) {
-      // console.error('エラーが発生しました:', error);
+      console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data;
-      // console.error('エラーレスポンス:', errorResponseData);
+      console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
     }
   }
@@ -77,7 +78,7 @@ const Login = () => {
   if (data) {
     const errorMessage = '既にログインしています。';
     alert(errorMessage);
-    location.href = '/pages/account';
+    location.href = '/';
   }
 }
 
