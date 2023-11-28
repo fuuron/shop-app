@@ -1,18 +1,13 @@
 import styles from '../../styles/products.module.css'
 import React, { useEffect, useState } from 'react'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const Favorite = () => {
 
   const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/userFavorite`, () =>
-    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/userFavorite`).then((res) => res.data),
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/userFavorite`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -39,8 +34,8 @@ const Favorite = () => {
 
   async function AddFavorite(productId) {
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/favorite/add', { product_id: productId });
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post('/api/favorite/add', { product_id: productId });
   
       if (response.data) {
         setFavoriteProducts([...favoriteProducts, productId]);
@@ -51,14 +46,17 @@ const Favorite = () => {
         }));
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('Failed to add favorite:', error);
     }
   }
 
   async function RemoveFavorite(productId) {
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post(`api/favorite/remove/${productId}`, { product_id: productId });
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post(`api/favorite/remove/${productId}`, { product_id: productId });
   
       if (response.data) {
         setFavoriteProducts(favoriteProducts.filter((id) => id !== productId));
@@ -69,6 +67,9 @@ const Favorite = () => {
         }));
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('Failed to remove favorite:', error);
     }
   }

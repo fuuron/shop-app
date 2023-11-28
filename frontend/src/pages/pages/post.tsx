@@ -2,18 +2,13 @@ import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const Post = () => {
 
   const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
-  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -33,8 +28,8 @@ const Post = () => {
     // console.log(data);
 
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/post', formData, {
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post('/api/post', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -47,6 +42,9 @@ const Post = () => {
       }
       
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
@@ -62,9 +60,7 @@ const Post = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れました。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = '/';
+    unauthorized();
   }
 
   if (data) {

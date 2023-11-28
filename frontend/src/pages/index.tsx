@@ -1,16 +1,11 @@
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-    withCredentials: true
-})
+import { axiosCreate } from '../components/function'
 
 const Index = () => {
 
     const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
-    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
+      axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
       {
         shouldRetryOnError: false,
         revalidateOnFocus: false

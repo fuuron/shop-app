@@ -1,18 +1,13 @@
 import styles from '../../styles/purchaseHistory.module.css'
 import React from 'react'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create ({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const SellHistory = () => {
 
   const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/sellHistory`, () =>
-    http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/sellHistory`).then((res) => res.data),
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/sellHistory`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -33,9 +28,7 @@ const SellHistory = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れています。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = '/';
+    unauthorized();
   }
 
   if (data.userSelledHistories && data.userSelledHistories.length) {
