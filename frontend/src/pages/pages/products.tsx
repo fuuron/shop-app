@@ -32,15 +32,8 @@ const Products = () => {
     }
   }
 
-  let isRequesting = false;
-
   async function AddFavorite(productId) {
-    if (isRequesting) {
-      return;
-    }
-
     try {
-      isRequesting = true;
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post('/api/favorite/add', { product_id: productId });
   
@@ -57,18 +50,11 @@ const Products = () => {
         unauthorized();
       }
       // console.error('Failed to add favorite:', error);
-    } finally {
-      isRequesting = false;
     }
   }
 
   async function RemoveFavorite(productId) {
-    if (isRequesting) {
-      return;
-    }
-
     try {
-      isRequesting = true;
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post(`api/favorite/remove/${productId}`, { product_id: productId });
   
@@ -85,8 +71,6 @@ const Products = () => {
         unauthorized();
       }
       // console.error('Failed to remove favorite:', error);
-    } finally {
-      isRequesting = false;
     }
   }
 
