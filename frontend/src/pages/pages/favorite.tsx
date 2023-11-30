@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import router from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate, unauthorized } from '../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Favorite = () => {
 
@@ -22,7 +23,8 @@ const Favorite = () => {
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [favoriteCounts, setFavoriteCounts] = useState([]); 
+  const [favoriteCounts, setFavoriteCounts] = useState([]);
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const toggleFavorite = (productId) => {
     if (favoriteProducts.includes(productId)) {
@@ -32,15 +34,9 @@ const Favorite = () => {
     }
   }
 
-  let isRequesting = false;
-
   async function AddFavorite(productId) {
-    if (isRequesting) {
-      return;
-    }
-
     try {
-      isRequesting = true;
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post('/api/favorite/add', { product_id: productId });
   
@@ -58,17 +54,13 @@ const Favorite = () => {
       }
       // console.error('Failed to add favorite:', error);
     } finally {
-      isRequesting = false;
+      setRequestLoading(false);
     }
   }
 
   async function RemoveFavorite(productId) {
-    if (isRequesting) {
-      return;
-    }
-
     try {
-      isRequesting = true;
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post(`api/favorite/remove/${productId}`, { product_id: productId });
   
@@ -86,7 +78,7 @@ const Favorite = () => {
       }
       // console.error('Failed to remove favorite:', error);
     } finally {
-      isRequesting = false;
+      setRequestLoading(false);
     }
   }
 
@@ -124,6 +116,12 @@ const Favorite = () => {
   if (data.products && data.products.length > 0) {
     return (
       <div className={styles.main}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         <h1 className={styles.h1Header}>お気に入り一覧</h1>
 
         <h2 className={styles.purchaseButton} onClick={purchaseRouter}>購入する</h2>
