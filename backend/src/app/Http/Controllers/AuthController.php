@@ -51,6 +51,7 @@ class AuthController extends Controller
     public function userInformation(Request $request)
     {
         $user = Auth::user();
+        // $user = $request->user();
         $userProductsWithoutImages = Product::where('user_id', $user->id)->get();
 
         $userProducts = $userProductsWithoutImages->map(function ($product) {
@@ -148,7 +149,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'ユーザー情報が編集されました',
-            'LoginPageUrl' => '/pages/account'
+            'accountPageUrl' => '/pages/account'
         ], 200);
     }
 }

@@ -1,18 +1,14 @@
 import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import router from 'next/router'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const Edit = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
-  http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -26,16 +22,19 @@ const Edit = () => {
 
   const onSubmit = async (data) => {
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.put('/api/edit', data);
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().put('/api/edit', data);
       const responseData = response.data;
       // console.log(responseData);
       
-      if (responseData.LoginPageUrl) {
-        location.href = responseData.LoginPageUrl;
+      if (responseData.accountPageUrl) {
+        location.href = '/';
       }
       
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
@@ -51,9 +50,7 @@ const Edit = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れました。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    unauthorized();
   }
 
   if (data) {
@@ -71,7 +68,7 @@ const Edit = () => {
             className={styles.input}
             type='name'
             {...register('name', { required: true })}
-            value={data.name}
+            defaultValue={data.name}
           />
           {errors.name && <div className={styles.emptyErrorMessage}>ユーザー名を入力してください</div>}
 
@@ -80,7 +77,7 @@ const Edit = () => {
             className={styles.input}
             type='email'
             {...register('email', { required: true })}
-            value={data.email}
+            defaultValue={data.email}
           />
           {errors.email && <div className={styles.emptyErrorMessage}>emailを入力してください</div>}
 

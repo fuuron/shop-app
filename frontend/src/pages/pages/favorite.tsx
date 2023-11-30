@@ -1,18 +1,13 @@
 import styles from '../../styles/products.module.css'
 import React, { useEffect, useState } from 'react'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const Favorite = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/userFavorite', () =>
-    http.get('http://localhost/api/userFavorite').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/userFavorite`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/userFavorite`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -22,7 +17,7 @@ const Favorite = () => {
   // console.log(data);
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   const [favoriteProducts, setFavoriteProducts] = useState([]);
@@ -37,28 +32,45 @@ const Favorite = () => {
     }
   }
 
+  let isRequesting = false;
+
   async function AddFavorite(productId) {
+    if (isRequesting) {
+      return;
+    }
+
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post('/api/favorite/add', { product_id: productId });
+      isRequesting = true;
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post('/api/favorite/add', { product_id: productId });
   
       if (response.data) {
         setFavoriteProducts([...favoriteProducts, productId]);
-        console.log(response.data);
+        // console.log(response.data);
         setFavoriteCounts((prevCounts) => ({
           ...prevCounts,
           [productId]: (prevCounts[productId] || 0) + 1,
         }));
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('Failed to add favorite:', error);
+    } finally {
+      isRequesting = false;
     }
   }
 
   async function RemoveFavorite(productId) {
+    if (isRequesting) {
+      return;
+    }
+
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post(`api/favorite/remove/${productId}`, { product_id: productId });
+      isRequesting = true;
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post(`api/favorite/remove/${productId}`, { product_id: productId });
   
       if (response.data) {
         setFavoriteProducts(favoriteProducts.filter((id) => id !== productId));
@@ -69,7 +81,12 @@ const Favorite = () => {
         }));
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('Failed to remove favorite:', error);
+    } finally {
+      isRequesting = false;
     }
   }
 
@@ -88,7 +105,7 @@ const Favorite = () => {
   }
 
   const purchaseRouter = () => {
-    router.push('http://localhost:3000/pages/purchase');
+    router.push('/pages/purchase');
   }
   
   if (isLoading) {
@@ -101,7 +118,7 @@ const Favorite = () => {
   if (error) {
     const errorMessage = 'セッションが切れました。再度ログインしてください。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/';
   }
 
   if (data.products && data.products.length > 0) {

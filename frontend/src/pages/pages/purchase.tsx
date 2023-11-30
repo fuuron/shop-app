@@ -3,18 +3,13 @@ import styles2 from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create ({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const Purchase = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/checkoutPage', () =>
-    http.get('http://localhost/api/checkoutPage').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/checkoutPage`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/checkoutPage`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -24,7 +19,7 @@ const Purchase = () => {
   // console.log(data);
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -35,20 +30,23 @@ const Purchase = () => {
 
     if (isConfirmed) {
       try {
-        await http.get('/sanctum/csrf-cookie');
-        const response = await http.post('/api/purchase', data);
+        await axiosCreate().get('/sanctum/csrf-cookie');
+        const response = await axiosCreate().post('/api/purchase', data);
         // console.log(responseData);
         if (response) {
-          router.push('http://localhost:3000/pages/purchaseHistory');
+          router.push('/pages/purchaseHistory');
         }
       } catch (error) {
+        if (error.response.status === 401) {
+          unauthorized();
+        }
         // console.error('エラーが発生しました:', error);
         const errorResponseData = error.response.data.errors;
         if (errorResponseData) {
           setErrorResponseData(errorResponseData);
         } else {
           alert('購入できませんでした。再度読み込んでください。');
-          router.push('http://localhost:3000/pages/products');
+          router.push('/pages/products');
         }
       }
     }
@@ -62,9 +60,7 @@ const Purchase = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れています。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    unauthorized();
   }
 
   if (data.products && data.products.length > 0) {

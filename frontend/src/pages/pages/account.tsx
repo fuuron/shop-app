@@ -1,18 +1,13 @@
 import styles from '../../styles/account.module.css'
 import styles2 from '../../styles/products.module.css'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const AcccountPage = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/userInformation', () =>
-  http.get('http://localhost/api/userInformation').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/userInformation`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/userInformation`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -22,9 +17,9 @@ const AcccountPage = () => {
   // console.log(data);
 
   const handleLogout = () => {
-    http.post('/api/logout').then((res) => {
+    axiosCreate().post('/api/logout').then((res) => {
       // console.log(res);
-      location.href = 'http://localhost:3000/pages/login';
+      location.href = '/';
     })
   }
 
@@ -32,24 +27,24 @@ const AcccountPage = () => {
     const isConfirmed = window.confirm('これまでの取引内容、および投稿した商品は失われます。本当に削除しますか？');
     
     if (isConfirmed) {
-      http.delete('/api/destroy').then((res) => {
+      axiosCreate().delete('/api/destroy').then((res) => {
         // console.log(res);
-        location.href = 'http://localhost:3000/pages/register';
+        location.href = '/';
       })
       .catch((error) => {
         // console.log(error);
         alert('エラーが発生しました');
-        location.href = 'http://localhost:3000/pages/account';
+        location.href = '/';
       })
     }
   }
 
   const editRouter = () => {
-    router.push('http://localhost:3000/pages/edit');
+    router.push('/pages/edit');
   }
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   if (isLoading) {
@@ -60,9 +55,7 @@ const AcccountPage = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れています。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    unauthorized();
   }
 
   if (data) {
