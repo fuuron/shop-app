@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate, unauthorized } from '../../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -11,6 +12,8 @@ const ProductDetail = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
+
   const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`, () =>
     axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`).then((res) => res.data),
     {
@@ -32,6 +35,7 @@ const ProductDetail = () => {
 
   const onSubmit = async (data) => {
     try {
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post(`/api/commentPost/${productId}`, data);
       const responseData = response.data;
@@ -49,6 +53,8 @@ const ProductDetail = () => {
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
+    } finally {
+      setRequestLoading(false);
     }
   }
 
@@ -68,6 +74,12 @@ const ProductDetail = () => {
   if (data) {
     return (
       <div className={styles.productDetail}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         <div className={styles.productContainer}>
           <h1 className={styles.productTitle}>{data.product.title}</h1>
           <div className={styles.information}>
