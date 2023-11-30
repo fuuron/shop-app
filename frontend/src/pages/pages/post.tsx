@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import router from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate, unauthorized } from '../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Post = () => {
 
@@ -17,6 +18,7 @@ const Post = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -28,6 +30,7 @@ const Post = () => {
     // console.log(data);
 
     try {
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post('/api/post', formData, {
         headers: {
@@ -49,6 +52,8 @@ const Post = () => {
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
+    } finally {
+      setRequestLoading(false);
     }
   }
 
@@ -66,6 +71,12 @@ const Post = () => {
   if (data) {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         <div className={styles.formContent}>
 
           <div className={styles.formTitle}>タイトル</div>
