@@ -13,8 +13,8 @@ class CorsMiddleware
     public function handle($request, Closure $next)
     {
         $headers = [
-            'Access-Control-Allow-Credentials'=> 'true',
-            'Access-Control-Allow-Origin'      => '*',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Access-Control-Allow-Origin'      => 'https://app.medakaya2222.com',
             'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Max-Age'           => '86400',
             'Access-Control-Allow-Headers'     => 'Accept, Origin, Content-Type, Authorization, X-Requested-With'

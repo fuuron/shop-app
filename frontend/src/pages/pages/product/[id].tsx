@@ -2,13 +2,8 @@ import styles from '../../../styles/productDetail.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../../components/function'
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -16,8 +11,8 @@ const ProductDetail = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
-  const { data: data, error, isLoading } = useSWR(`http://localhost/api/showDetail/${productId}`, () =>
-    http.get(`http://localhost/api/showDetail/${productId}`).then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/showDetail/${productId}`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -28,25 +23,28 @@ const ProductDetail = () => {
     const isConfirmed = window.confirm('本当に削除しますか？');
 
     if (isConfirmed) {
-      http.delete(`/api/product/${productId}`).then((res) => {
+      axiosCreate().delete(`/api/product/${productId}`).then((res) => {
         // console.log(res);
-        location.href = 'http://localhost:3000/pages/products';
+        router.push('/pages/products');
       })
     }
   }
 
   const onSubmit = async (data) => {
     try {
-      await http.get('/sanctum/csrf-cookie');
-      const response = await http.post(`/api/commentPost/${productId}`, data);
+      await axiosCreate().get('/sanctum/csrf-cookie');
+      const response = await axiosCreate().post(`/api/commentPost/${productId}`, data);
       const responseData = response.data;
       // console.log(responseData);
       
       if (responseData.showDetailPageUrl) {
-        location.href = responseData.showDetailPageUrl;
+        location.href= '/';
       }
       
     } catch (error) {
+      if (error.response.status === 401) {
+        unauthorized();
+      }
       // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
@@ -62,9 +60,9 @@ const ProductDetail = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れています。再度ログインしてください。';
+    const errorMessage = 'エラーが発生しました。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    location.href = '/';
   }
 
   if (data) {

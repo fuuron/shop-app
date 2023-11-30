@@ -1,18 +1,13 @@
 import styles from '../../styles/purchaseHistory.module.css'
 import React from 'react'
 import router from 'next/router'
-import axios from 'axios'
 import useSWR from 'swr'
-
-const http = axios.create ({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate, unauthorized } from '../../components/function'
 
 const PurchaseHistory = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/purchaseHistory', () =>
-    http.get('http://localhost/api/purchaseHistory').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/purchaseHistory`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/purchaseHistory`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -22,7 +17,7 @@ const PurchaseHistory = () => {
   // console.log(data);
 
   const handleShowDetail = (productId) => {
-    router.push(`http://localhost:3000/pages/product/${productId}`);
+    router.push(`/pages/product/${productId}`);
   }
 
   if (isLoading) {
@@ -33,9 +28,7 @@ const PurchaseHistory = () => {
   }
 
   if (error) {
-    const errorMessage = 'セッションが切れています。再度ログインしてください。';
-    alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/login';
+    unauthorized();
   }
 
   if (data.userPurchasedHistories && data.userPurchasedHistories.length) {

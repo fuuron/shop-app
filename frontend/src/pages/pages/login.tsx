@@ -1,18 +1,14 @@
 import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import router from 'next/router'
 import useSWR from 'swr'
-
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
+import { axiosCreate } from '../../components/function'
 
 const Login = () => {
 
-  const { data: data, error, isLoading } = useSWR('http://localhost/api/user', () =>
-  http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -24,18 +20,23 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      http.get('/sanctum/csrf-cookie');
+      await axiosCreate().get('/sanctum/csrf-cookie');
 
-      const response = await http.post('/api/login', data);
+      const response = await axiosCreate().post('/api/login', data);
       // console.log(response);
 
       const responseData = response.data;
       // console.log(responseData);
 
       if (responseData.accountPageUrl) {
-        location.href = responseData.accountPageUrl;
+        location.href = '/';
       }
     } catch (error) {
+      if (error.response.status === 419) {
+        const errorMessage = 'エラーが発生しました。再度ログインしてください。';
+        alert(errorMessage);
+        location.href = '/';
+      }
       // console.error('エラーが発生しました:', error);
       const errorResponseData = error.response.data;
       // console.error('エラーレスポンス:', errorResponseData);
@@ -77,7 +78,7 @@ const Login = () => {
   if (data) {
     const errorMessage = '既にログインしています。';
     alert(errorMessage);
-    location.href = 'http://localhost:3000/pages/account';
+    location.href = '/';
   }
 }
 

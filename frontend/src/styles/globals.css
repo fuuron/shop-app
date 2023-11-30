@@ -94,6 +94,12 @@ li {
   font-size: 24px;
   text-decoration: none;
   font-weight: bold;
+  color: rgb(96, 0, 156);
+  cursor: pointer;
+}
+
+.logo:hover {
+  color: rgb(255, 0, 0);
 }
 
 /* 非アクティブ */

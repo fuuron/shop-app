@@ -1,21 +1,16 @@
 import React, { useState, ReactNode } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
 import useSWR from 'swr'
+import { axiosCreate } from './function'
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const http = axios.create({
-  baseURL: 'http://localhost',
-  withCredentials: true
-})
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
-  const { data: user, error, isLoading } = useSWR('http://localhost/api/user', () =>
-    http.get('http://localhost/api/user').then((res) => res.data),
+  const { data: user, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, () =>
+    axiosCreate().get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`).then((res) => res.data),
     {
       shouldRetryOnError: false,
       revalidateOnFocus: false
@@ -26,6 +21,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const toggleHeader = () => {
     setIsActive(!isActive);
+  }
+
+  const moveHome = () => {
+    location.href = '/';
   }
 
   if (isLoading) {
@@ -55,8 +54,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   if (user) {
     return (
       <div className='htmlHeader'>
-        <header id="header" className={isActive ? 'active' : ''}>
-          <Link href='/pages/products' className='logo'>めだか屋</Link>
+        <header id='header' className={isActive ? 'active' : ''}>
+          <div className='logo' onClick={moveHome}>めだか屋</div>
           <div id='hmb' onClick={toggleHeader}>
             <span></span>
             <span></span>

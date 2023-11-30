@@ -20,29 +20,36 @@ use App\Models\User;
 |
 */
 
-Route::get('/userInformation', [AuthController::class, 'userInformation']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::delete('/destroy', [AuthController::class, 'destroy']);
-Route::put('/edit', [AuthController::class, 'edit']);
 
-Route::post('/post', [ProductController::class, 'post']);
-Route::get('/products', [ProductController::class, 'products']);
-Route::get('/userFavorite', [ProductController::class, 'userFavorite']);
-Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
-Route::delete('/product/{id}', [ProductController::class, 'productDestroy']);
+Route::group(['middleware' => ['auth_check']], function () {
+    Route::get('/userInformation', [AuthController::class, 'userInformation']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::delete('/destroy', [AuthController::class, 'destroy']);
+    Route::put('/edit', [AuthController::class, 'edit']);
 
-Route::post('/commentPost/{id}', [CommentController::class, 'commentPost']);
+    Route::post('/post', [ProductController::class, 'post']);
+    Route::get('/products', [ProductController::class, 'products']);
+    Route::get('/userFavorite', [ProductController::class, 'userFavorite']);
+    Route::get('/showDetail/{id}', [ProductController::class, 'showDetail']);
+    Route::delete('/product/{id}', [ProductController::class, 'productDestroy']);
 
-Route::post('/favorite/add', [FavoriteController::class, 'addFavorite']);
-Route::post('/favorite/remove/{id}', [FavoriteController::class, 'removeFavorite']);
+    Route::post('/commentPost/{id}', [CommentController::class, 'commentPost']);
 
-Route::get('/checkoutPage', [PurchaseController::class, 'checkoutPage']);
-Route::post('/purchase', [PurchaseController::class, 'purchase']);
-Route::get('/purchaseHistory', [PurchaseController::class, 'purchaseHistory']);
-Route::get('/sellHistory', [PurchaseController::class, 'sellHistory']);
+    Route::post('/favorite/add', [FavoriteController::class, 'addFavorite']);
+    Route::post('/favorite/remove/{id}', [FavoriteController::class, 'removeFavorite']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/checkoutPage', [PurchaseController::class, 'checkoutPage']);
+    Route::post('/purchase', [PurchaseController::class, 'purchase']);
+    Route::get('/purchaseHistory', [PurchaseController::class, 'purchaseHistory']);
+    Route::get('/sellHistory', [PurchaseController::class, 'sellHistory']);
+    
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
