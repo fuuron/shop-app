@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import router from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate, unauthorized } from '../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Purchase = () => {
 
@@ -24,12 +25,14 @@ const Purchase = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const onSubmit = async (data) => {
     const isConfirmed = window.confirm('商品を購入します。よろしいですか？');
 
     if (isConfirmed) {
       try {
+        setRequestLoading(true);
         await axiosCreate().get('/sanctum/csrf-cookie');
         const response = await axiosCreate().post('/api/purchase', data);
         // console.log(responseData);
@@ -48,6 +51,8 @@ const Purchase = () => {
           alert('購入できませんでした。再度読み込んでください。');
           router.push('/pages/products');
         }
+      } finally {
+        setRequestLoading(false);
       }
     }
   }
@@ -66,6 +71,12 @@ const Purchase = () => {
   if (data.products && data.products.length > 0) {
     return (
       <div className={styles.container}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         <h2>以下の商品を購入します</h2>
         <div className={styles.products}>
           {data.products.map((product) => (

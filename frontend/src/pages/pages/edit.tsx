@@ -1,9 +1,9 @@
 import styles from '../../styles/login.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import router from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate, unauthorized } from '../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Edit = () => {
 
@@ -19,9 +19,11 @@ const Edit = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const onSubmit = async (data) => {
     try {
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().put('/api/edit', data);
       const responseData = response.data;
@@ -39,6 +41,8 @@ const Edit = () => {
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
+    } finally {
+      setRequestLoading(false);
     }
   }
 
@@ -56,6 +60,12 @@ const Edit = () => {
   if (data) {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         {errorResponseData && (
           <div className={styles.serverErrorTopMessage}>
             {errorResponseData}

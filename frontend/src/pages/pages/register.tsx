@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import router from 'next/router'
 import useSWR from 'swr'
 import { axiosCreate } from '../../components/function'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 const Register = () => {
 
@@ -17,9 +18,11 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorResponseData, setErrorResponseData] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
 
   const onSubmit = async (data) => {
     try {
+      setRequestLoading(true);
       await axiosCreate().get('/sanctum/csrf-cookie');
       const response = await axiosCreate().post('/api/register', data);
       const responseData = response.data;
@@ -34,6 +37,8 @@ const Register = () => {
       const errorResponseData = error.response.data.errors;
       // console.error('エラーレスポンス:', errorResponseData);
       setErrorResponseData(errorResponseData);
+    } finally {
+      setRequestLoading(false);
     }
   }
 
@@ -47,6 +52,12 @@ const Register = () => {
   if (error) {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        {requestLoading &&
+          <div className='beatLoader'>
+            <BeatLoader />
+          </div>
+        }
+        
         {errorResponseData && (
           <div className={styles.serverErrorTopMessage}>
             {errorResponseData}
