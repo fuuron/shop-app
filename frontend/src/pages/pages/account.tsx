@@ -108,9 +108,9 @@ const AcccountPage = () => {
                     <div>種類: {product.type}</div>
                     <div>投稿日時: {new Date(product.updated_at).toLocaleString()}</div>
                   </div>
-                  <div className={styles.imageContainer}>
-                    <picture>
-                      <img src={product.photo} width="200" height="auto" alt={product.title} />
+                  <div className={styles2.imageContainer}>
+                    <picture className={styles2.picture}>
+                      <img src={product.photo} style={{ maxHeight: "120px", maxWidth: "210px" }} alt={product.title} />
                     </picture>
                   </div>
                 </div>
