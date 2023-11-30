@@ -194,7 +194,15 @@
     .imageContainer {
         display: flex;
         align-items: center;
-        margin-right: 50px;
+        width: 200px;
+        height: 120px;
+        margin: 0 auto;
+        margin-right: 40px;
+        margin-top: 8px;
+    }
+
+    .picture {
+        margin: 0 auto;
     }
 
     .favoriteButton {

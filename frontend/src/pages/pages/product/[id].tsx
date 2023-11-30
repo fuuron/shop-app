@@ -89,7 +89,7 @@ const ProductDetail = () => {
           </div>
           <div className={styles.imageContainer}>
             <picture>
-              <img src={data.product.photo} width="400" height="auto" alt={data.product.title} />
+              <img src={data.product.photo} style={{ maxHeight: "220px", maxWidth: "500px" }} alt={data.product.title} />
             </picture>
           </div>
         </div>
