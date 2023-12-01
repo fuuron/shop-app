@@ -61,7 +61,17 @@
 }
 
 .imageContainer {
-    margin-right: 50px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 120px;
+    margin: 0 auto;
+    margin-right: 40px;
+    margin-top: 8px;
+}
+
+.picture {
+    margin: 0 auto;
 }
 
 @media (max-width: 650px) {
